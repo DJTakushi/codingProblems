@@ -1,11 +1,14 @@
 class LinkedListNode:
-    def __init__(self,data,previous=None):
-        self.data=data.pop(0)
-        self.previous=previous
+    def __init__(self,data,option=None):
+        self.previous=None
         self.next=None
         self.arbitrary=None
-        if len(data):
-            self.next=LinkedListNode(data,self)
+        if option=="list":
+            self.data=data.pop(0)
+            if len(data):
+                self.next=LinkedListNode(data,"list")
+        else:
+            self.data=data
 
     def getData(self):
         return self.data

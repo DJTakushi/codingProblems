@@ -17,6 +17,17 @@ class node:
         print(self.data)
         if self.right != None:
             self.right.printLR()
+
+class deque:
+    def __init__(self):
+        self.list=[]
+    def append(self,node):
+        self.list.append(node)
+    def popleft(self):
+        if not self.list:
+            return
+        return self.list.pop(0)
+
 def testNode():
     head=node(100)
     node2=head.createLeft(50)
@@ -25,4 +36,4 @@ def testNode():
     node2=head.createRight(200)
     node2.createRight(350)
     head.printLR()
-testNode()
+#testNode()

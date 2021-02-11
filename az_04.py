@@ -1,17 +1,16 @@
 from azLinkedList import  *
-
-
-#testLinkedList=linkedList([4,7,8,9,10,15,16,19])
-#testHead=testLinkedList.getHead()
+#https://www.educative.io/blog/crack-amazon-coding-interview-questions
 
 def deep_copy_arbitrary_pointer(head):
+    if head==None:
+        return
     nodeDict={} # key = old node, value = new node
     currentNode=head
     previousNewNode=None
     while(currentNode!=None):
-        nodeCopy=LinkedListNode([currentNode.data])
+        nodeCopy=LinkedListNode(currentNode.data)
         nodeDict[currentNode]=nodeCopy
-        nodeCopy.arbitrary=currentNode.arbitrary#save old node; will be updated later
+        nodeCopy.arbitrary=currentNode.arbitrary;#save old node; will be updated later
         if previousNewNode!=None:
             previousNewNode.next=nodeCopy
         previousNewNode=nodeCopy
@@ -20,13 +19,19 @@ def deep_copy_arbitrary_pointer(head):
     newHead=nodeDict[head]
     currentNode=newHead
     while(currentNode!=None):
-        currentNode.arbitrary=nodeDict[currentNode.arbitrary]#look up stored old value and update with dictionary value for new node
+        if currentNode.arbitrary:
+            currentNode.arbitrary=nodeDict[currentNode.arbitrary] #look up stored old value and update with dictionary value for new node
         currentNode=currentNode.next
     return newHead
 
-myTestNode=LinkedListNode([4,7,8,9,10,15,16,19])
-myTestNode.applyArbitrary([7,6,4,4,3,2,1,0])
-myDeepCopy=deep_copy_arbitrary_pointer(myTestNode)
-print(myTestNode.checkMatches(myDeepCopy))
-print(myTestNode.exportList())
-print(myDeepCopy.exportList())
+def test_deep_copy_arbitrary_pointer():
+    myTestNode=LinkedListNode([4,7,8,9,10,15,16,19],"list")
+    myTestNode.applyArbitrary([7,6,4,4,3,2,1,0])
+    myDeepCopy=deep_copy_arbitrary_pointer(myTestNode)
+
+    result=myTestNode.checkMatches(myDeepCopy)
+    if result:
+        print("Pass")
+    else:
+        print("FAILURE!!!")
+test_deep_copy_arbitrary_pointer()
