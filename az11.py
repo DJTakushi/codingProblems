@@ -15,36 +15,56 @@ def printQuestion():
 def get_all_subsets(v, sets):
   #v = list of elements
   #set = list of sets
-  c=0 #counter
-  maxC=pow(2,len(v))-1
   maxIndex=len(v)-1
-  while c < maxC:
-      tempC=c
-      idx=0
-      tempSet=set()
-      while idx <= maxIndex:
-          thisVal=pow(2,idx)
-          if tempC-thisVal >=0:
-              tempSet.add(True)
-              tempC-=thisVal
-          else:
-              tempSet.add(False)
-          idx+=1
-      print(tempSet)
+  pow2=[]
+  c=0
+  while c <= maxIndex:
+      pow2.append(pow(2,c))
       c+=1
+  number=0
+  listOLists=[]
+  while number <= pow(2,maxIndex+1)-1:
+      tempNumber=number
+      idx=maxIndex
+      myList=[]
+      while idx >=0:
+          difference=tempNumber-pow2[idx]
+          #print("  number="+str(number)+" tempNumber="+str(tempNumber)+" difference="+str(difference))
+          if difference >=0:
+              myList.insert(0,True)
+              tempNumber-=pow2[idx]
+          else:
+              myList.insert(0,False)
+          idx-=1
+      #print("number="+str(number)+" myList="+str(myList))
+      listOLists.append(myList)
+      number+=1
+  for thisList in listOLists:
+      thisSet=set()
+      c=0
+      for iter in thisList:
+          if iter:
+              thisSet.add(v[c])
+          c+=1
+      sets.append(thisSet)
   return sets
 
 def test_get_all_subsets():
-    testVector=[([2,3,4],[{}, {2}, {3}, {2, 3}, {4}, {2, 4}, {3, 4}, {2, 3, 4}])]
-    testVector.append(([2,5,7],[{}, {2}, {5}, {2, 5}, {7}, {2, 7}, {5, 7}, {2, 5, 7}]))
+    testVector=[([2,3,4],[set(), {2}, {3}, {2, 3}, {4}, {2, 4}, {3, 4}, {2, 3, 4}])]
+    testVector.append(([2,5,7],[set(), {2}, {5}, {2, 5}, {7}, {2, 7}, {5, 7}, {2, 5, 7}]))
     for iter in testVector:
         expectation=iter[1]
         thisResult=[]
         thisResult=get_all_subsets(iter[0],thisResult)
-        if str(expectation)==thisResult:
+        if len(expectation)==len(thisResult):
+            c=0
+            while c < len(expectation):
+                if expectation[c]!=thisResult[c]:
+                    print("FAIL!!!  Element "+str(c)+" should be "+str(expectation[c])+" but received "+str(thisResult[c]))
+                c+=1
             print("Pass.")
         else:
-            print("FAIL!!!  Expected "+str(expectation)+" but received "+str(thisResult))
+            print("FAIL!!!  Expected list of lenth "+str(len(expectation))+" but received list of length "+str(len(thisResult)))
     return
 
 test_get_all_subsets()
