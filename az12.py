@@ -13,6 +13,7 @@ def print_all_braces(n):
   else:
       result=print_all_braces(n-1)
       idx=0
+      mySet=set()
       for iter in result:
           #add to front
 
