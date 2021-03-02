@@ -8,25 +8,33 @@ def print_all_braces(n):
       result.append(['{', '{', '}', '}', '{', '}'])
       result.append(['{', '}', '{', '{', '}', '}'])
       result.append(['{', '}', '{', '}', '{', '}'])
-  if n ==1:
-      result=[['{','}']]
-  else:
-      result=print_all_braces(n-1)
-      idx=0
-      mySet=set()
-      for iter in result:
-          #add to front
-
-          #clone=iter.copy()
-          #clone.insert(0,'{')
-          #clone.append('}')
-
-          iter.append('{')
-          iter.append('}')
-          #result.insert(idx,clone)
-          idx+=1
+  result=set()
+  myList=['{']
+  result=bracesRecursive(n,*myList,result)
 
   return result
+
+def bracesRecursive(n,theList,theSet):
+    print(theList)
+    curLen=len(theList)
+    if curLen>(n*2):
+        return theSet
+    lCount=0
+    rCount=0
+    for iter in theList:
+        if iter=='{':
+            lCount+=1
+        if iter=='}':
+            rCount+=1
+    if curLen==(n*2):
+        if lCount==rCount:
+            if theList not in theSet:
+                theSet.add(theList)
+    else:
+        theSet=bracesRecursive(n,theList.append('{'),theSet)
+        if rCount < lCount:
+            theSet=bracesRecursive(n,theList.append('}'),theSet)
+    return theSet
 
 def test_print_all_braces():
     testVector=[
