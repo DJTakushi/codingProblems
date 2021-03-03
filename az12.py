@@ -9,13 +9,14 @@ def print_all_braces(n):
       result.append(['{', '}', '{', '{', '}', '}'])
       result.append(['{', '}', '{', '}', '{', '}'])
   result=set()
-  myList=['{']
-  result=bracesRecursive(n,*myList,result)
-
+  myList=list()
+  myList.append('{')
+  result=bracesRecursive(n,myList,result)
   return result
 
 def bracesRecursive(n,theList,theSet):
-    print(theList)
+    #print(theList)
+    #print(type(theList))
     curLen=len(theList)
     if curLen>(n*2):
         return theSet
@@ -28,12 +29,17 @@ def bracesRecursive(n,theList,theSet):
             rCount+=1
     if curLen==(n*2):
         if lCount==rCount:
-            if theList not in theSet:
-                theSet.add(theList)
+            theListTuple=tuple(theList)
+            if theListTuple not in theSet:
+                theSet.add(theListTuple)
+                print("ADDED! "+ str(theListTuple))
     else:
-        theSet=bracesRecursive(n,theList.append('{'),theSet)
+        theList.append('{')
+        theSet=bracesRecursive(n,theList.copy(),theSet)
+        theList.pop(-1)
         if rCount < lCount:
-            theSet=bracesRecursive(n,theList.append('}'),theSet)
+            theList.append('}')
+            theSet=bracesRecursive(n,theList.copy(),theSet)
     return theSet
 
 def test_print_all_braces():
@@ -41,13 +47,11 @@ def test_print_all_braces():
     ((1),[
     ['{','}']
     ])]
-
     testVector.append(
     ((2),[
     ['{','{','}','}'],#enclose 0
     ['{','}','{','}']#+R 0
     ]))               #+L is a duplicate
-
     testVector.append(
     ((3),[
     ['{', '{', '{', '}', '}', '}'],#enclose 0
@@ -56,31 +60,25 @@ def test_print_all_braces():
     ['{', '}', '{', '{', '}', '}'],#+L 0
     ['{', '}', '{', '}', '{', '}']]))#+R 1
                                      #+L 1 would be a dulicate
-
-    for iter in testVector:
-        expectation=iter[1]
-        thisResult=""
-        thisResult=print_all_braces(iter[0])
-        listNo=0
-        for thisList in expectation:
-            elementNo=0
-            for thisElement in thisList:
-                if listNo >= len(thisResult):
-                    print("Fail!!!  Result does not have "+str(listNo)+" lists!")
+    for case in testVector:
+        expectation=case[1]
+        thisResult=set()
+        thisResult=print_all_braces(case[0])
+        testSet=set()
+        for iter in expectation:
+            thisTuple=tuple(iter)
+            testSet.add(thisTuple)
+        print(testSet)
+        for iter in testSet:
+            testTuple=tuple(iter)
+            if testTuple not in thisResult:
+                print("Fail!!!  Result does not have "+str(testTuple)+" !")
+                return
+            else:
+                if len(testSet) != len(thisResult):
+                    print("Fail!!!  Result expectd to have "+str(len(testSet))+" lists but returned "+str(len(thisResult))+" lists!")
                     return
-                else:
-                    if elementNo >= len(thisResult[listNo]):
-                        print("Fail!!!  Result ["+str(listNo)+"] does not have "+str(elementNo)+" items")
-                        return
-                    else:
-                        if thisElement!=thisResult[listNo][elementNo]:
-                            print("FAIL!!!\n"
-                                    "  In listNo "+str(listNo)+" elementNo "+str(elementNo)+"\n"
-                                    "  Expected "+str(thisElement)+"\n"
-                                    "  Received "+str(thisResult[listNo][elementNo]))
-                            return
-                elementNo+=1
-            listNo+=1
-        print("Pass.")
+        print("Pass ";0)
+
     return
 test_print_all_braces()
