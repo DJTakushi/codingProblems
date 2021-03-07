@@ -1,4 +1,5 @@
 #https://www.educative.io/blog/crack-amazon-coding-interview-questions
+from takTest import *
 def printPrompt():
     print("15. Search Rotated Array\n"
             "Search for a given number in a sorted array, with unique\n"
@@ -14,15 +15,16 @@ def printPrompt():
             "Runtime Complexity: Logarithmic,O(logn)\n"
             "Memory Complexity: Logarithmic,O(logn)\n")
 
-# key<Mid LSorted key>Lmin RSorted key<Rmax Dir
-#    1       1      1         x       x      L
-#    1       1      0         x       x      R
-#    1       0      x         x       x      L
-#    0       x      x         1       1      R
-#    0       x      x         1       0      L
-#    0       x      x         0       x      R
-
-
+def printTruthTableStrategy():
+    print("key<Mid LSorted key>Lmin RSorted key<Rmax Dir\n"
+          "    1       1      1         x       x      L\n"
+          "    1       1      0         x       x      R\n"
+          "    1       0      x         x       x      L\n"
+          "    0       x      x         1       1      R\n"
+          "    0       x      x         1       0      L\n"
+          "    0       x      x         0       x      R\n")
+def myFunctionW(data):
+    return binary_search_rotated(data.arr, data.key)
 def binary_search_rotated(arr, key):
     s=0#start
     e=len(arr)-1
@@ -43,43 +45,29 @@ def binary_search_rotated(arr, key):
                 s=m+1
         m=((e-s)//2)+s
     return m
-
-
-def test():
-    class testCase:
-        def __init__(self,arr=list(),key=0,exp=0):
-            self.arr=arr
-            self.key=key
-            self.expectation=exp
-
+class fdata:
+    def __init__(self,arr,key):
+        self.arr=arr
+        self.key=key
+    def print(self):
+        print("  arr = "+str(self.arr))
+        print("  key = "+str(self.key))
+def getTestVector():
     tar0=[1,10,20,47,59,63,75,88,99,107,120,133,155,162,176,188,199,200,210,222]
     testVector=list()
     counter=0
     for iter in tar0:
-        testVector.append(testCase(tar0,iter,counter))
+        testVector.append(testCase(fdata(tar0,iter),counter))
         counter+=1
     tar1=[176,188,199,200,210,222,1,10,20,47,59,63,75,88,99,107,120,133,155,162]
     counter=0
-
-    additional=True
-    if additional:
-        for iter in tar1:
-            testVector.append(testCase(tar1,iter,counter))
-            counter+=1
-        tar2=[47,59,63,75,88,99,107,120,133,155,162,176,188,199,200,210,222,1,10,20]
-        counter=0
-        for iter in tar2:
-            testVector.append(testCase(tar2,iter,counter))
-            counter+=1
-
-    counter=0
-    for test in testVector:
-        # if counter>1:
-            # return
-        result=binary_search_rotated(test.arr,test.key)
-        if test.expectation!=result:
-            print("FAIL!!! Array "+str(test.arr)+ " with key "+str(test.key)+" expects "+str(test.expectation)+" but produced "+str(result)+" !")
-        else:
-            print("Pass.")
+    for iter in tar1:
+        testVector.append(testCase(fdata(tar1,iter),counter))
         counter+=1
-test()
+    tar2=[47,59,63,75,88,99,107,120,133,155,162,176,188,199,200,210,222,1,10,20]
+    counter=0
+    for iter in tar2:
+        testVector.append(testCase(fdata(tar2,iter),counter))
+        counter+=1
+    return testVector
+test(myFunctionW, getTestVector())
