@@ -25,7 +25,7 @@ def printProblem():
 #  that will simply have x added to them at the end.  This allows us to evaulate
 #  a funtion at a lower order, which will be eaier.
 def staircaseW(data):
-    return(staircaseFinal(data.n,data.X))
+    return(staircasefinal(data.n,data.X))
 def staircfacasebase(n):
     #indexes are 1 & 2
     if n <= 1:

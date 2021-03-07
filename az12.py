@@ -1,19 +1,25 @@
+#https://www.educative.io/blog/crack-amazon-coding-interview-questions
+from takTest import *
+def printPrompt():
+    print("Determine if the sum of two integers is equal to the given value\n"
+            "Given an array of integers and a value, determine if there\n"
+            "are any two integers in the array whose sum is equal to the\n"
+            "given value. Return true if the sum exists and return false\n"
+            "if it does not. Consider this array and the target sums:\n"
+            "  5  7  1  2  8  4  3\n"
+            "  Target Sum=10, 7+3=10, 2+8=10:  True\n"
+            " Target Sum=19, No 2 values sum up to 19\n"
+            "Runtime Complexity: Linear, O(n)\n"
+            "Memory Complexity: Linear, O(n)")
+
+def functionW(data):
+    return print_all_braces(data.input)
 def print_all_braces(n):
-  #TODO: Write - Your - Code
-  hack=False
-  if hack:
-      result = []
-      result.append(['{', '{', '{', '}', '}', '}'])
-      result.append(['{', '{', '}', '{', '}', '}'])
-      result.append(['{', '{', '}', '}', '{', '}'])
-      result.append(['{', '}', '{', '{', '}', '}'])
-      result.append(['{', '}', '{', '}', '{', '}'])
   result=set()
   myList=list()
   myList.append('{')
   result=bracesRecursive(n,myList,result)
   return result
-
 def bracesRecursive(n,theList,theSet):
     #print(theList)
     #print(type(theList))
@@ -32,7 +38,7 @@ def bracesRecursive(n,theList,theSet):
             theListTuple=tuple(theList)
             if theListTuple not in theSet:
                 theSet.add(theListTuple)
-                print("ADDED! "+ str(theListTuple))
+                # print("ADDED! "+ str(theListTuple))
     else:
         theList.append('{')
         theSet=bracesRecursive(n,theList.copy(),theSet)
@@ -41,44 +47,15 @@ def bracesRecursive(n,theList,theSet):
             theList.append('}')
             theSet=bracesRecursive(n,theList.copy(),theSet)
     return theSet
-
-def test_print_all_braces():
-    testVector=[
-    ((1),[
-    ['{','}']
-    ])]
-    testVector.append(
-    ((2),[
-    ['{','{','}','}'],#enclose 0
-    ['{','}','{','}']#+R 0
-    ]))               #+L is a duplicate
-    testVector.append(
-    ((3),[
-    ['{', '{', '{', '}', '}', '}'],#enclose 0
-    ['{', '{', '}', '{', '}', '}'],#enclose 1
-    ['{', '{', '}', '}', '{', '}'],#+R 0
-    ['{', '}', '{', '{', '}', '}'],#+L 0
-    ['{', '}', '{', '}', '{', '}']]))#+R 1
-                                     #+L 1 would be a dulicate
-    for case in testVector:
-        expectation=case[1]
-        thisResult=set()
-        thisResult=print_all_braces(case[0])
-        testSet=set()
-        for iter in expectation:
-            thisTuple=tuple(iter)
-            testSet.add(thisTuple)
-        print(testSet)
-        for iter in testSet:
-            testTuple=tuple(iter)
-            if testTuple not in thisResult:
-                print("Fail!!!  Result does not have "+str(testTuple)+" !")
-                return
-            else:
-                if len(testSet) != len(thisResult):
-                    print("Fail!!!  Result expectd to have "+str(len(testSet))+" lists but returned "+str(len(thisResult))+" lists!")
-                    return
-        print("Pass ";0)
-
-    return
-test_print_all_braces()
+class fdata:
+    def __init__(self,input):
+        self.input=input
+    def print(self):
+        print("  input = "+str(self.input))
+def getTestVector():
+    tv=[]
+    tv.append(testCase(fdata(1),{('{','}')}))
+    tv.append(testCase(fdata(2),{('{','{','}','}'),('{','}','{','}')}))
+    tv.append(testCase(fdata(3),{('{', '{', '{', '}', '}', '}'),('{', '{', '}', '{', '}', '}'),('{', '{', '}', '}', '{', '}'),('{', '}', '{', '{', '}', '}'),('{', '}', '{', '}', '{', '}')}))
+    return tv
+test(functionW, getTestVector())
