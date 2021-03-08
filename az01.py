@@ -1,4 +1,3 @@
-from takTest import *
 def printProblem():
     print("Find the missing number in the array\n"
             "  You are given an array of positive numbers from 1 to n,\n"
@@ -29,17 +28,28 @@ def find_missing(input):
     if difference!=0:
         return difference
     return -1
-def find_missingW(data):
+
+import unittest
+import takTest as tt
+def functionWrapper(data):
     return(find_missing(data.arr))
-class fdata:
+class fdata(tt.tData):
     def __init__(self,arr):
         self.arr=arr
-    def print(self):
-        print("  arr = "+str(self.arr))
-
-def getTestVector():
-    testVector=list()
-    testVector.append(testCase(fdata([3,7,1,2,8,4,5]),6))
-    testVector.append(testCase(fdata([3,7,1,2,8,4,5,10,9]),6))
-    return testVector
-test(find_missingW,getTestVector())
+class TestMe(tt.tunittest):
+    def makeTestVector(self):
+        testVector=list()
+        testVector.append(tt.testCase(fdata([3,7,1,2,8,4,5]),6))
+        testVector.append(tt.testCase(fdata([3,7,1,2,8,4,5,10,9]),6))
+        testVector.append(tt.testCase(fdata([3,7,1,2,8,4,5,10,9,12,6]),211))
+        return testVector
+    # def test_executeTests(self):
+    #     for test in self.testVector:
+    #         result=functionWrapper(test.data)
+    #         if result != test.expectation:
+    #             print("FAIL!!! For test case: ")
+    #             test.print()
+    #             print("  received "+str(result))
+    #         self.assertEqual(test.expectation, result)
+if __name__ == "__main__":
+    unittest.main()
