@@ -1,5 +1,4 @@
 #https://www.educative.io/blog/crack-amazon-coding-interview-questions
-from takTest import *
 import azLinkedList as azll
 def printPrompt():
     print("Merge two sorted linked lists\n"
@@ -11,8 +10,6 @@ def printPrompt():
             "   head1->4->7->8->9->10->15->16->19->NULL\n"
             "Linear, O(m + n)O(m+n) where m and n are lengths of both\n"
             "linked lists")
-def functionW(data):
-    return merge_sorted(data.arr1,data.arr2)
 
 def merge_sorted2(head1, head2):
   # if both lists are empty then merged list is also empty
@@ -71,29 +68,18 @@ def merge_sorted(head1, head2):
   head1=out
   return head1
 
-class fdata:
+import takTest as tt
+def functionWrapper(data):
+    return merge_sorted(data.arr1,data.arr2)
+class fdata(tt.tData):
     def __init__(self,arr1,arr2):
         self.arr1=arr1
         self.arr2=arr2
-    def print(self):
-        print("  arr1 = "+str(self.arr1))
-        print("  arr2 = "+str(self.arr2))
-def getTestVector():
-    tv=[]
-    tv.append(testCase(fdata([4,8,15,19],[7,9,10,16]),[4,7,8,9,10,15,16,19]))
-    return tv
-test(functionW, getTestVector())
-
-
-# for test in tv:
-#     ll0=azll.linkedList(test[0])
-#     ll1=azll.linkedList(test[1])
-#     product=merge_sorted2(ll0.head,ll1.head)
-#     pyList=[]
-#     product.returnList(pyList)
-#     if test[2]==pyList:
-#         print("Pass")
-#     else:
-#         print("FAIL!!!!!")
-#         print(" expected "+str(test[2]))
-#         print(" received "+str(pyList))
+class TestMe(tt.tunittest):
+    def makeTestVector(self):
+        self.functionWrapper=functionWrapper
+        tv=list()
+        tv.append(tt.testCase(fdata([4,8,15,19],[7,9,10,16]),[4,7,8,9,10,15,16,19]))
+        return tv
+if __name__ == "__main__":
+    tt.unittest.main()

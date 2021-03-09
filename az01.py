@@ -29,7 +29,6 @@ def find_missing(input):
         return difference
     return -1
 
-import unittest
 import takTest as tt
 def functionWrapper(data):
     return(find_missing(data.arr))
@@ -38,18 +37,11 @@ class fdata(tt.tData):
         self.arr=arr
 class TestMe(tt.tunittest):
     def makeTestVector(self):
+        self.functionWrapper=functionWrapper
         testVector=list()
         testVector.append(tt.testCase(fdata([3,7,1,2,8,4,5]),6))
         testVector.append(tt.testCase(fdata([3,7,1,2,8,4,5,10,9]),6))
-        testVector.append(tt.testCase(fdata([3,7,1,2,8,4,5,10,9,12,6]),211))
+        testVector.append(tt.testCase(fdata([3,7,1,2,8,4,5,10,9,12,6]),11))
         return testVector
-    # def test_executeTests(self):
-    #     for test in self.testVector:
-    #         result=functionWrapper(test.data)
-    #         if result != test.expectation:
-    #             print("FAIL!!! For test case: ")
-    #             test.print()
-    #             print("  received "+str(result))
-    #         self.assertEqual(test.expectation, result)
 if __name__ == "__main__":
-    unittest.main()
+    tt.unittest.main()

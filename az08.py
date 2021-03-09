@@ -67,15 +67,19 @@ def charrayToStr(charray, startIdx=0,endIdx=None):
         idx+=1
     return output
 
-def test_reverse_words():
-    tests=[("We love Python","Python love We")]
-    tests.append(("World Hello","Hello World"))
-    tests.append(("To be or not to be","be to not or be To"))
-    tests.append(("You are amazing","amazing are You"))
-    for iter in tests:
-        product=reverse_words(iter[0])
-        if iter[1]==product:
-            print("Pass.")
-        else:
-            print("FAIL!  Expected \""+iter[1]+"\" but received \""+product+"\"")
-test_reverse_words()
+import takTest as tt
+def functionWrapper(data):
+    return reverse_words(data.sentence)
+class fdata(tt.tData):
+    def __init__(self,sentence):
+        self.sentence=sentence
+class TestMe(tt.tunittest):
+    def makeTestVector(self):
+        self.functionWrapper=functionWrapper
+        tv=list()
+        tv.append(tt.testCase(fdata("World Hello"),"Hello World"))
+        tv.append(tt.testCase(fdata("To be or not to be"),"be to not or be To"))
+        tv.append(tt.testCase(fdata("You are amazing"),"amazing are You"))
+        return tv
+if __name__ == "__main__":
+    tt.unittest.main()

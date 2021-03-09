@@ -69,3 +69,19 @@ def test_order_traversal():
         print("  Received = \""+received+"\"")
 
 test_order_traversal()
+import takTest as tt
+def functionWrapper(data):
+    return find_sum_of_two(data.arr,data.target)
+class fdata(tt.tData):
+    def __init__(self,arr,target):
+        self.arr=arr
+        self.target=target
+class TestMe(tt.tunittest):
+    def makeTestVector(self):
+        self.functionWrapper=functionWrapper
+        tv=list()
+        tv.append(tt.testCase(fdata([5,7,1,2,8,4,3],10),True))
+        tv.append(tt.testCase(fdata([5,7,1,2,8,4,3],19),False))
+        return tv
+if __name__ == "__main__":
+    tt.unittest.main()

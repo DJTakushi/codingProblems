@@ -16,20 +16,26 @@ def can_segment_string(s, dictionary):
         if not markToContinue:
             return True
     return False
-def test_can_segment_string():
-    dict={"apple","apple","pear","pie"}
-    check(can_segment_string("applepie",dict),True)
-    check(can_segment_string("applepeer",dict),False)
-    dict={"peach","apple","pear","pie"}
-    check(can_segment_string("applepie",dict),True)
-    check(can_segment_string("applepeer",dict),False)
-    dict={"hell","now","on","hello"}
-    check(can_segment_string("hellonow",dict),True)
 
-
-def check(result,expected):
-    if result==expected:
-        print("Pass")
-    else:
-        print("FAIL!!!  Expected "+str(expected)+", got "+str(result))
-test_can_segment_string()
+import takTest as tt
+def functionWrapper(data):
+    return can_segment_string(data.s,data.dictionary)
+class fdata(tt.tData):
+    def __init__(self,s,dictionary):
+        self.s=s
+        self.dictionary=dictionary
+class TestMe(tt.tunittest):
+    def makeTestVector(self):
+        self.functionWrapper=functionWrapper
+        tv=list()
+        dict={"apple","apple","pear","pie"}
+        tv.append(tt.testCase(fdata("applepie",dict),True))
+        tv.append(tt.testCase(fdata("applepeer",dict),False))
+        dict={"peach","apple","pear","pie"}
+        tv.append(tt.testCase(fdata("applepie",dict),True))
+        tv.append(tt.testCase(fdata("applepeer",dict),False))
+        dict={"hell","now","on","hello"}
+        tv.append(tt.testCase(fdata("hellonow",dict),True))
+        return tv
+if __name__ == "__main__":
+    tt.unittest.main()

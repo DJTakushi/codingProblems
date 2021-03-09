@@ -13,19 +13,9 @@ class testCase:
 class tunittest(unittest.TestCase):
     def test_executeTests(self):
         for test in self.makeTestVector():
-            result=functionWrapper(test.data)
+            result=self.functionWrapper(test.data)
             if result != test.expectation:
                 print("FAIL!!! For test case: ")
                 test.print()
                 print("  received "+str(result))
             self.assertEqual(test.expectation, result)
-def test(testFunctionW,testVector):
-    for test in testVector:
-        result=testFunctionW(test.data)
-        if result != test.expectation:
-            print("FAIL!!! For test case: ")
-            test.print()
-            print(" received "+str(result))
-            return False
-    print(" pass.")
-    return True

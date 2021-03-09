@@ -31,7 +31,7 @@ def solve_coin_change(denominations, amount, currentList=None):
         #print("subAmount= "+str(subAmount))
         if subAmount==0:
             output+=1
-            print("0 at "+str(currentList))
+            # print("0 at "+str(currentList))
         if subAmount >0:
             #can sub-amount be broken up by constitudents?
             output+=solve_coin_change(denominations[0:len(denominations)-1],subAmount,currentList.copy())
@@ -40,18 +40,19 @@ def solve_coin_change(denominations, amount, currentList=None):
 
     return output
 
-def test_solve_coin_change():
-    testVector=[(([1,5,10],20),9)]
-    testVector.append((([1,5,2],7),6))
-    for iter in testVector:
-        expectation=iter[1]
-        result=solve_coin_change(iter[0][0],iter[0][1])
-        if expectation==result:
-            print("Pass.")
-        else:
-            print("FAIL!!!  Expected "+str(expectation)+" but received "+str(result))
-    return
-
-
-#printQuestion()
-test_solve_coin_change()
+import takTest as tt
+def functionWrapper(data):
+    return solve_coin_change(data.denominations,data.ammount)
+class fdata(tt.tData):
+    def __init__(self,denominations,ammount):
+        self.denominations=denominations
+        self.ammount=ammount
+class TestMe(tt.tunittest):
+    def makeTestVector(self):
+        self.functionWrapper=functionWrapper
+        tv=list()
+        tv.append(tt.testCase(fdata([1,5,10],20),9))
+        tv.append(tt.testCase(fdata([1,5,2],7),6))
+        return tv
+if __name__ == "__main__":
+    tt.unittest.main()
