@@ -8,10 +8,7 @@ class Node:#provided
         self.val = val
         self.left = left
         self.right = right
-
 def serialize(node):
-    return getBinaryNode(node)[0:-1]
-def serialize2(node):
     nodeList=list()
     nodeList=getNodeList(node)
     outString=""
@@ -19,15 +16,6 @@ def serialize2(node):
         outString+=iter.val+delim
     return outString[0:-1]
 delim=" "
-def getBinaryNode(node):
-    output=""
-    if node.left:
-        output+=(getBinaryNode(node.left))
-    output+=(node.val+delim)
-    if node.right:
-        output+=(getBinaryNode(node.right))
-    return output
-
 def deserialize(s):
     values=s.split(delim)
     valueCount=len(values)
@@ -37,11 +25,6 @@ def deserialize(s):
         nodeList[i].val=values[i]
     return headNode
 
-def getNodeLeftMost(node):
-    thisNode=node
-    while thisNode.left:
-        thisNode=thisNode.left
-    return thisNode
 
 def getNodeList(node):
     nodeList=list()
@@ -87,14 +70,13 @@ class UnitTest(unittest.TestCase):
     def test_case(self):
         node = Node('root', Node('left', Node('left.left')), Node('right'))
         self.assertEqual("left.left left root right",serialize(node))
-        self.assertEqual("left.left left root right",serialize2(node))
         self.assertEqual(deserialize(serialize(node)).left.left.val,'left.left')
         self.assertEqual(deserialize(serialize(node)).left.val,'left')
         self.assertEqual(deserialize(serialize(node)).right.val,'right')
         self.assertEqual(deserialize(serialize(node)).val,'root')
 
         node = Node('root', Node('left', Node('left.left'), Node('left.right')), Node('right'))
-        self.assertEqual("left.left left left.right root right",serialize2(node))
+        self.assertEqual("left.left left left.right root right",serialize(node))
         self.assertEqual(deserialize(serialize(node)).left.left.val,'left.left')
         self.assertEqual(deserialize(serialize(node)).left.right.val,'left.right')
         self.assertEqual(deserialize(serialize(node)).left.val,'left')
@@ -102,7 +84,7 @@ class UnitTest(unittest.TestCase):
         self.assertEqual(deserialize(serialize(node)).val,'root')
 
         node = Node('root', Node('left', Node('left.left'), Node('left.right')), Node('right',Node('right.left')))
-        self.assertEqual("left.left left left.right root right.left right",serialize2(node))
+        self.assertEqual("left.left left left.right root right.left right",serialize(node))
         self.assertEqual(deserialize(serialize(node)).left.left.val,'left.left')
         self.assertEqual(deserialize(serialize(node)).left.right.val,'left.right')
         self.assertEqual(deserialize(serialize(node)).left.val,'left')
@@ -111,7 +93,7 @@ class UnitTest(unittest.TestCase):
         self.assertEqual(deserialize(serialize(node)).val,'root')
 
         node = Node('root', Node('left', Node('left.left'), Node('left.right')), Node('right',Node('right.left'),Node('right.right')))
-        self.assertEqual("left.left left left.right root right.left right right.right",serialize2(node))
+        self.assertEqual("left.left left left.right root right.left right right.right",serialize(node))
         self.assertEqual(deserialize(serialize(node)).left.left.val,'left.left')
         self.assertEqual(deserialize(serialize(node)).left.right.val,'left.right')
         self.assertEqual(deserialize(serialize(node)).left.val,'left')
@@ -121,7 +103,7 @@ class UnitTest(unittest.TestCase):
         self.assertEqual(deserialize(serialize(node)).val,'root')
 
         node = Node('root', Node('left', Node('left.left')), Node('right',Node('right.left'),Node('right.right')))
-        self.assertEqual("left.left left root right.left right right.right",serialize2(node))
+        self.assertEqual("left.left left root right.left right right.right",serialize(node))
         self.assertEqual(deserialize(serialize(node)).left.left.val,'left.left')
         self.assertEqual(deserialize(serialize(node)).left.val,'left')
         #all below will fail - tree is built top->down and left->right.  Cannot have skipped indexes.
@@ -131,7 +113,7 @@ class UnitTest(unittest.TestCase):
         # self.assertEqual(deserialize(serialize(node)).val,'root')
 
         node = Node('root', Node('left', Node('left.left',Node('left.left.left')), Node('left.right')), Node('right',Node('right.left'),Node('right.right')))
-        self.assertEqual("left.left.left left.left left left.right root right.left right right.right",serialize2(node))
+        self.assertEqual("left.left.left left.left left left.right root right.left right right.right",serialize(node))
         self.assertEqual(deserialize(serialize(node)).left.left.val,'left.left')
         self.assertEqual(deserialize(serialize(node)).left.left.left.val,'left.left.left')
         self.assertEqual(deserialize(serialize(node)).left.right.val,'left.right')
