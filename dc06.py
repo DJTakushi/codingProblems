@@ -18,8 +18,15 @@ class takMemory:
     takMemoryDict=dict()
     takMemorySet=set()
     Null=5150
+    top=0
+    USE_RANDOM_ADDRESSES = False
     def getNewAddress():
-        return int(takMemory.blockSize*random())
+        if takMemory.USE_RANDOM_ADDRESSES:
+            return int(takMemory.blockSize*random())
+        else:
+            takMemory.top+=1
+            return takMemory.top-1
+
     def allocateNew(item):
         if len(takMemory.takMemorySet) >= takMemory.blockSize:
             return takMemory.Null
@@ -46,7 +53,14 @@ class takMemory:
         takMemory.takMemoryDict.clear()
         takMemory.takMemorySet.clear()
 
+
 class xNode:
+    def __init__(self,val,prev=0,next=0):
+        self.val=val
+        self.pointer = takMemory.allocateNew(self)
+        self.both=takMemory.Null
+
+class xList:
 # [0]
 # b=null
 #
@@ -55,16 +69,13 @@ class xNode:
 #
 # [0]----------------[1]----------------[1]
 # b=null^1.p       b=1.p^2.p         b=1.p^null
-    headNode=None
-    def __init__(self,val,prev=0,next=0):
-        self.val=val
-        if not xNode.headNode:
-            xNode.headNode=self
-        self.pointer = takMemory.allocateNew(self)
-        self.both=takMemory.Null
-    def add(element):
-        lastNodes = xNode.getLastTwo()
+    def __init__(self):
+        self.headNode=None
+    def add(self,element):
+        lastNodes = self.getLastTwo()
         thisNode = xNode(element)
+        if not self.headNode:
+            self.headNode=thisNode
         if lastNodes[1]:
             if lastNodes[0]:
                 lastNodes[1].both=lastNodes[0].pointer^thisNode.pointer #add new forward addr
@@ -74,11 +85,11 @@ class xNode:
         else:
             thisNode.both=takMemory.Null
         return thisNode
-    def getLastTwo(): #will often need to get the last two to update the last
+    def getLastTwo(self): #will often need to get the last two to update the last
         nodeA=None
         nodeB=None
-        if xNode.headNode:
-            nodeB=xNode.headNode
+        if self.headNode:
+            nodeB=self.headNode
         else:
             return (None,None)
         while(True):
@@ -94,11 +105,11 @@ class xNode:
                  nodeB=takMemory.dereferencePointer(nextAddr)
             else:
                 return (nodeA,nodeB)
-    def get(idx):
+    def get(self,idx):
         nodeA=None
         nodeB=None
-        if xNode.headNode:
-            nodeB=xNode.headNode
+        if self.headNode:
+            nodeB=self.headNode
         else:
             return None
         while(idx):
@@ -131,57 +142,59 @@ class addrTest(unittest.TestCase):
         self.assertEqual(takMemory.Null,takMemory.allocateNew(myVar))
         takMemory.clear()
 class xNodeTest(unittest.TestCase):
-    def YtestBig(self):
+    def testXListBig(self):
+        takMemory.clear()
+        myXList=xList()
         nodeList=list()
-        for i in range(10):
-            nodeList.append(xNode.add(i))
+        for i in range(100):
+            nodeList.append(myXList.add(i))
             c=0
             for j in nodeList:
-                self.assertEqual(j,xNode.get(c))
+                self.assertEqual(j,myXList.get(c))
                 c+=1
 
-
-    def testXnode(self):
+    def testXListShort(self):
+        myXList=xList()
         takMemory.clear()
-        self.assertEqual((None,None),xNode.getLastTwo())
-        self.assertEqual(None,xNode.get(0))
-        self.assertEqual(None,xNode.get(1))
+        self.assertEqual((None,None),myXList.getLastTwo())
+        self.assertEqual(None,myXList.get(0))
+        self.assertEqual(None,myXList.get(1))
 
-        node0=xNode.add(556)
-        self.assertEqual((None,node0),xNode.getLastTwo())
+        node0=myXList.add(556)
+        self.assertEqual((None,node0),myXList.getLastTwo())
         self.assertEqual(takMemory.Null,node0.both)
-        self.assertEqual(node0,xNode.get(0))
-        self.assertEqual(None,xNode.get(1))
+        self.assertEqual(node0,myXList.get(0))
+        self.assertEqual(None,myXList.get(1))
 
-        node1=xNode.add(762)
+        node1=myXList.add(762)
         self.assertEqual(takMemory.Null^node1.pointer,node0.both)
         self.assertEqual(takMemory.Null^node0.pointer,node1.both)
-        self.assertEqual((node0,node1),xNode.getLastTwo())
-        self.assertEqual(node0,xNode.get(0))
-        self.assertEqual(node1,xNode.get(1))
-        self.assertEqual(None,xNode.get(2))
+        self.assertEqual((node0,node1),myXList.getLastTwo())
+        self.assertEqual(node0,myXList.get(0))
+        self.assertEqual(node1,myXList.get(1))
+        self.assertEqual(None,myXList.get(2))
 
-        node2=xNode.add(1270)
+        node2=myXList.add(1270)
         self.assertEqual(takMemory.Null^node1.pointer,node0.both)
         self.assertEqual(node0.pointer^node2.pointer,node1.both)
         self.assertEqual(node1.pointer^takMemory.Null,node2.both)
-        self.assertEqual((node1,node2),xNode.getLastTwo())
-        self.assertEqual(node0,xNode.get(0))
-        self.assertEqual(node1,xNode.get(1))
-        self.assertEqual(node2,xNode.get(2))
-        self.assertEqual(None,xNode.get(3))
+        self.assertEqual((node1,node2),myXList.getLastTwo())
+        self.assertEqual(node0,myXList.get(0))
+        self.assertEqual(node1,myXList.get(1))
+        self.assertEqual(node2,myXList.get(2))
+        self.assertEqual(None,myXList.get(3))
 
-        node3=xNode.add(20)
+        node3=myXList.add(20)
         self.assertEqual(takMemory.Null^node1.pointer,node0.both)
         self.assertEqual(node0.pointer^node2.pointer,node1.both)
         self.assertEqual(node1.pointer^node3.pointer,node2.both)
         self.assertEqual(node2.pointer^takMemory.Null,node3.both)
-        self.assertEqual((node2,node3),xNode.getLastTwo())
-        self.assertEqual(node0,xNode.get(0))
-        self.assertEqual(node1,xNode.get(1))
-        self.assertEqual(node2,xNode.get(2))
-        self.assertEqual(node3,xNode.get(3))
-        self.assertEqual(None,xNode.get(4))
+        self.assertEqual((node2,node3),myXList.getLastTwo())
+        self.assertEqual(node0,myXList.get(0))
+        self.assertEqual(node1,myXList.get(1))
+        self.assertEqual(node2,myXList.get(2))
+        self.assertEqual(node3,myXList.get(3))
+        self.assertEqual(None,myXList.get(4))
 
 if __name__=="__main__":
     unittest.main()
