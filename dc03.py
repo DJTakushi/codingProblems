@@ -1,6 +1,7 @@
-#dailyCoding problem#3
+ #dailyCoding problem#3
 def printProblem():
-    print("Given the root to a binary tree, implement\n"
+    print("This problem was recently asked by Google.\n"
+            "Given the root to a binary tree, implement\n"
             "serialize(root), which serializes the tree into a string, and\n"
             "deserialize(s), which deserializes the string back into the tree.")
 class Node:#provided

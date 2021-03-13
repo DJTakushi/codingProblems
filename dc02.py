@@ -1,5 +1,6 @@
 def printPrompt():
-    print("Given an array of integers, return a new array such that\n"
+    print("This problem was asked by Uber.\n"
+            "Given an array of integers, return a new array such that\n"
             "each element at index i of the new array is the product of\n"
             "all the numbers in the original array except the one at i.\n"
             "For example, if our input was [1, 2, 3, 4, 5],\n"
