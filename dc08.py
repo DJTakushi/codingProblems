@@ -33,21 +33,27 @@ def printProblem():
 #         \
 #          b
 # This tree has 5 unival subtrees: the leaf at ‘c’, and every ‘b’.
+
 def univalCount(headNode, val=None):
     count = 0
     headPotential=True
+    if not headNode.left and not headNode.right:#bottom node
+        return 1
 
     if headNode.left:
-        leftResult=univalCount(headNode.left)
+        leftResult=univalCount(headNode.left,"child")
         count+=abs(leftResult)
         if headNode.val != headNode.left.val and leftResult >= 0:
             headPotential=False
     if headNode.right:
-        rightResult=univalCount(headNode.right)
+        rightResult=univalCount(headNode.right,"child")
         count+=abs(rightResult)
         if headNode.val != headNode.right.val and rightResult >= 0:
             headPotential=False
-    if not headPotential:
+        if headNode.left:
+            if headNode.val == headNode.right.val and headNode.val ==headNode.left.val:
+                count+=1
+    if not headPotential and val:
         count*=-1
     return count
 
@@ -62,5 +68,30 @@ class myTest(unittest.TestCase):
     def test_this(self):
         headNode=node(0,node(1),node(0,node(1,node(1),node(1)),node(0)))
         self.assertEqual(5,univalCount(headNode))
+
+        headNode=node(0,node(1),node(0))
+        self.assertEqual(2,univalCount(headNode))
+
+#   a
+#  / \
+# a   a
+#     /\
+#    a  a
+#        \
+#         A
+        headNode=node('a',node('a'),node('a',node('a'),node('a',None,node('A'))))
+        self.assertEqual(3,univalCount(headNode))
+
+#   a
+#  / \
+# c   b
+#     /\
+#    b  b
+#         \
+#          b
+        headNode=node('a',node('c'),node('b',node('b'),node('b',None,node('b'))))
+        self.assertEqual(5,univalCount(headNode))
+
+
 if __name__=="__main__":
     unittest.main()
