@@ -45,17 +45,16 @@ def univalCount(headNode, val=None):
     if headNode.left:
         leftResult=univalCount(headNode.left,val+1)
         count+=abs(leftResult)
-        if headNode.val != headNode.left.val and leftResult >= 0:
+        if headNode.val != headNode.left.val or leftResult < 0:
             headPotential=False
     if headNode.right:
         rightResult=univalCount(headNode.right,val+1)
         count+=abs(rightResult)
-        if headNode.val != headNode.right.val and rightResult >= 0:
+        if headNode.val != headNode.right.val or rightResult < 0:
             headPotential=False
-        if headNode.left:
-            if headNode.val == headNode.right.val and headNode.val ==headNode.left.val:
-                count+=1
-    if not headPotential and val:
+    if (headNode.left or headNode.right) and headPotential:
+        count+=1
+    if not headPotential and val > 0:
         count*=-1
     return count
 
@@ -69,10 +68,10 @@ import unittest
 class myTest(unittest.TestCase):
     def test_this(self):
         headNode=node(0,node(1),node(0,node(1,node(1),node(1)),node(0)))
-        #self.assertEqual(5,univalCount(headNode))
+        self.assertEqual(5,univalCount(headNode))
 
         headNode=node(0,node(1),node(0))
-        #self.assertEqual(2,univalCount(headNode))
+        self.assertEqual(2,univalCount(headNode))
 
 #   a
 #  / \
