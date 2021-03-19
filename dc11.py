@@ -34,13 +34,18 @@ class node:
             self.children[letter]=node(letter,remainder)
     def getAll(self,theList=None):
         if not theList:
-            theList=list():
+            theList=list()
         for i in self.children:
+            childList=i.getAll()
+            for j in childList:
+                theList.append(self.value+j)
+        return theList
 
 
 import unittest
 class myTest(unittest.TestCase):
     def test_node(self):
         headNode=node("dog")
+        self.assertEqual(["dog"],headNode.getAll())
 if __name__=="__main__":
     unittest.main()
