@@ -21,8 +21,14 @@ def printProblem():
 class node:
     def __init__(self,remainder,value=None):
         self.value=value
+        if self.value==None:
+            self.value=""#difficult to work with None later
         self.children=dict() #key = letter, child node
-        self.add(remainder)
+        self.terminator=False #is this a terminator for a word?
+        if remainder == "":
+            self.terminator=True
+        else:
+            self.add(remainder)
     def add(self,inString):
         if not inString:
             return
@@ -31,12 +37,27 @@ class node:
         if letter in self.children.keys():
             self.children[letter].add(remainder)
         else:
-            self.children[letter]=node(letter,remainder)
-    def getAll(self,theList=None):
-        if not theList:
-            theList=list()
-        for i in self.children:
-            childList=i.getAll()
+            self.children[letter]=node(remainder,letter)
+    def getAll(self, filterString=None):
+        thisLetter,thisRemainder=None,None
+        if filterString:
+            if len(filterString)>0:
+                thisLetter=filterString[0]
+            if len(filterString)>1:
+                thisRemainder=filterString[1:]
+
+        theList=list()
+        if self.terminator:
+            theList.append(self.value)#add just the value
+        applicableValues=list()
+        if filterString:
+            if thisLetter in self.children.keys():
+                applicableValues.append(self.children[thisLetter])
+        else:
+            applicableValues=self.children.values()
+
+        for i in applicableValues:
+            childList=i.getAll(thisRemainder)
             for j in childList:
                 theList.append(self.value+j)
         return theList
@@ -46,6 +67,13 @@ import unittest
 class myTest(unittest.TestCase):
     def test_node(self):
         headNode=node("dog")
-        self.assertEqual(["dog"],headNode.getAll())
+        headNode.add("deer")
+        headNode.add("deal")
+        headNode.add("cat")
+        self.assertEqual(["dog","deer","deal","cat"],headNode.getAll())
+        self.assertEqual(["dog"],headNode.getAll("do"))
+        self.assertEqual(["dog","deer","deal"],headNode.getAll("d"))
+        self.assertEqual(["deer","deal"],headNode.getAll("de"))
+        self.assertEqual(["cat"],headNode.getAll("c"))
 if __name__=="__main__":
     unittest.main()
