@@ -39,6 +39,7 @@ class myTests(unittest.TestCase):
         slog.record("12.7")
         slog.record("20")
 
+        self.assertEqual(-1,slog.get_last(10))
         self.assertEqual("22",slog.get_last(9))
         self.assertEqual("380",slog.get_last(8))
         self.assertEqual("9",slog.get_last(7))
