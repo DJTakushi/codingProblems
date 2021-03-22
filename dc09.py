@@ -23,7 +23,7 @@ def sumNonAdjNumbers(input):
             potentialSum+=input[i]
             canUsePIdxM1=False
             if pIdx-1 >=0 and pIdx-1 !=ppIdx+1:
-                canUsePIdxM1=True
+                canUsePIdxM1=True #if we can use the item before the previous, we should.
                 potentialSum+=input[pIdx-1]
             if potentialSum > sum:
                 if canUsePIdxM1:
