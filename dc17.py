@@ -1,4 +1,3 @@
-
 def printProblem():
     print("Daily Coding Problem: Problem #17 [Hard]\n"
             "This problem was asked by Google.\n"
@@ -41,9 +40,10 @@ def printProblem():
             "The name of a directory or sub-directory will not contain a period.")
 
 def maxFilePathLen(fs):
+    fs=preprocess(fs)
     recordString = ""
     path=list()
-    eList=fs.split("\\")
+    eList=fs.split('\\')
     while len(eList) != 0:
         if len(path)==0:
             path.append(eList.pop(0))
@@ -66,11 +66,14 @@ def maxFilePathLen(fs):
                 recordString=fileString
     return len(recordString)
 
-
+def preprocess(input):
+    input=input.replace("\n","\\n")
+    input=input.replace("\t","\\t")
+    return input
 
 import unittest
 class myTest(unittest.TestCase):
     def testThis(self):
-        self.assert(32, maxFilePathLen("dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"))
+        self.assertEqual(32, maxFilePathLen("dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"))
 if __name__=="__main__":
     unittest.main()
