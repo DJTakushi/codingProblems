@@ -13,3 +13,23 @@ def printProblem():
             "Do this in O(n) time and O(k) space. You can modify the input\n"
             "array in-place and you do not need to store the results. You can\n"
             "simply print them out as you compute them.")
+def maxValOSubArray(ar, k):
+    out=list()
+    for i in range(len(ar)+1-k):
+        out.append(max(ar[i:i+k])) #this operates at O(k) though
+    return out
+
+def maxValOSubArrayFAST(ar, k):
+    # preserve the current max
+    # replace it if
+    #     the next entered one is the new max
+    #     OR it has expired
+    #         Will then have to recompute with O(k) though
+    return -1
+
+import unittest
+class myTest(unittest.TestCase):
+    def testThis(self):
+        self.assertEqual([10,7,8,8],maxValOSubArray([10,5,2,7,8,7],3))
+if __name__=="__main__":
+    unittest.main()
