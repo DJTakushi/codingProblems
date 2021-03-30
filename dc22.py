@@ -24,6 +24,16 @@ def printProblem():
 # just go back to last word and try again.  Do this clause until you make it or fail.
 
 def stringToWordList(wordList,crushedString):
+    if crushedString in wordList:
+        return [crushedString]
+    for i in range(len(crushedString)):
+        if crushedString[0:i] in wordList:
+            outList=stringToWordList(wordList,crushedString[i:])
+            if outList == -1:
+                continue
+            else:
+                outList.insert(0,crushedString[0:i])
+                return outList
     return -1
 
 import unittest
@@ -38,3 +48,5 @@ class myTest(unittest.TestCase):
         cStr='theatre'
         expectation=['theatre']
         self.assertEqual(expectation,stringToWordList(wordList,cStr))
+if __name__=="__main__":
+    unittest.main()
