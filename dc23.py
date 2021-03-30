@@ -18,3 +18,23 @@ def printProblem():
             "the minimum number of steps required to reach the end is 7, since\n"
             "we would need to go through (1, 2) because there is a wall\n"
             "everywhere else on the second row.")
+
+def getC(point,dir):
+    if dir=="n":
+        return (point[0]-1,point[1])
+    if dir=="e":
+        return (point[0],point[1]+1)
+    if dir=="s":
+        return (point[0]+1,point[1])
+    if dir=="w":
+        return (point[0],point[1]-1)
+
+def solve(b,start,end,pPath=None):
+    up=(start[0]-1,start)
+
+
+import unittest
+class myTest(unittest.TestCase):
+    def testThis(self):
+        board=[['f', 'f', 'f', 'f'],['t', 't', 'f', 't'],['f', 'f', 'f', 'f'],['f', 'f', 'f', 'f']]
+        self.assertEqual(7,solve(board,(3,0),(0,0)))
