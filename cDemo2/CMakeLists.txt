@@ -10,3 +10,4 @@ project (HELLO)
 # the project's entire directory structure.
 add_subdirectory (hello)
 add_subdirectory (Demo)
+add_subdirectory (test)
