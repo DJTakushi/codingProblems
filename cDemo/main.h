@@ -2,6 +2,6 @@
 #define __INCLUDE__MAIN_H__
 
 #include <iostream>
-int printHelloWorld(void);
+std::string HelloWorld(void);
 
 #endif

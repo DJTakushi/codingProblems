@@ -2,11 +2,11 @@
 
 #include "main.h"
 int main() {
-    printHelloWorld();
+    std::cout << HelloWorld();
     return 0;
 }
-int printHelloWorld(void)
+std::string HelloWorld(void)
 {
-  std::cout << "Hello World!";
-  return 0;
+  std::string output = "Hello World!";
+  return output;
 }
