@@ -1,7 +1,7 @@
 # Create a library called "Hello" which includes the source file "hello.cxx".
 # The extension is already found. Any number of sources could be listed here.
 set(PNAME hello)
-set(CMAKE_BUILD_TYPE Release)
+#set(CMAKE_BUILD_TYPE Release)
 
 add_library (${PNAME} SHARED hello.cpp)
 
