@@ -1,0 +1,1 @@
+//bool unitTest(void * testFunction);
