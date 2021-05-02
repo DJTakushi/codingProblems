@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "prob.h"
+#include "main.h"
 std::string prob(void)
 {
   std::string output =
