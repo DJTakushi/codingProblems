@@ -13,7 +13,7 @@ std::string prob(void)
   "      string, such as zLg6wl.\n"
   "  - restore(short), which expands the shortened string into the original \n"
   "      url. If no such shortened string exists, return null.\n"
-  "  Hint: What if we enter the same URL twice?";
+  "  Hint: What if we enter the same URL twice?\n\n";
   return output;
 }
 void printProb(void)

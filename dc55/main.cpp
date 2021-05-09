@@ -8,7 +8,7 @@
 
 class testCase{
 public:
-    testCase(std::strign s)
+    testCase(std::string s)
     {
       url = s;
     }
@@ -21,14 +21,15 @@ bool unitTest(){
   testCases.push_back(testCase("y33t"));
 
   bool result = true;
+  urlManager* myUrlManager = new urlManager();
   for (auto it = begin(testCases); it != end(testCases);++it)
   {
-    std::string out = shorten(it->url);
-    out = restore(out);
+    std::string out = myUrlManager->shorten(it->url);
+    out = myUrlManager->restore(out);
     if (out != it->url)
     {
       result = false;
-      std::cout<<"Fail!  Expected "<<it->url<<", but received "<<out<<"\n";
+      std::cout<<"Fail!  Expected \""<<it->url<<"\", but received \""<<out<<"\"\n";
     }
   }
   if(result)
