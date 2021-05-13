@@ -19,6 +19,15 @@ bool unitTest(){
   std::vector<testCase> testCases;
 
   testCases.push_back(testCase("y33t"));
+  testCases.push_back(testCase("beetz"));
+  testCases.push_back(testCase("y33t"));
+  testCases.push_back(testCase("0"));
+  testCases.push_back(testCase("1"));
+  testCases.push_back(testCase("4"));
+  testCases.push_back(testCase("556"));
+  testCases.push_back(testCase("762"));
+  testCases.push_back(testCase("762"));
+  testCases.push_back(testCase("762 SOVIET"));
 
   bool result = true;
   urlManager* myUrlManager = new urlManager();
@@ -38,7 +47,7 @@ bool unitTest(){
 }
 int main()
 {
-  printProb();
+  //printProb();
   unitTest();
   return 0;
 }
