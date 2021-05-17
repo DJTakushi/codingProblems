@@ -9,5 +9,6 @@ target_include_directories(solution PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 set_target_properties(solution PROPERTIES PREFIX "") #set prefix to blank
 
 
-add_executable(main main.cpp)
-target_link_libraries(main LINK_PUBLIC problem solution)
+#add_executable(main main.cpp)
+add_library(main_lib SHARED main.cpp)
+target_link_libraries(main_lib LINK_PUBLIC problem solution)

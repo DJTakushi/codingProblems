@@ -14,36 +14,37 @@ public:
     }
     std::string url;
 };
+extern "C" {
+  BUTT bool unitTest(){
+    std::vector<testCase> testCases;
 
-bool unitTest(){
-  std::vector<testCase> testCases;
+    testCases.push_back(testCase("y33t"));
+    testCases.push_back(testCase("beetz"));
+    testCases.push_back(testCase("y33t"));
+    testCases.push_back(testCase("0"));
+    testCases.push_back(testCase("1"));
+    testCases.push_back(testCase("4"));
+    testCases.push_back(testCase("556"));
+    testCases.push_back(testCase("762"));
+    testCases.push_back(testCase("762"));
+    testCases.push_back(testCase("762 SOVIET"));
 
-  testCases.push_back(testCase("y33t"));
-  testCases.push_back(testCase("beetz"));
-  testCases.push_back(testCase("y33t"));
-  testCases.push_back(testCase("0"));
-  testCases.push_back(testCase("1"));
-  testCases.push_back(testCase("4"));
-  testCases.push_back(testCase("556"));
-  testCases.push_back(testCase("762"));
-  testCases.push_back(testCase("762"));
-  testCases.push_back(testCase("762 SOVIET"));
-
-  bool result = true;
-  urlManager* myUrlManager = new urlManager();
-  for (auto it = begin(testCases); it != end(testCases);++it)
-  {
-    std::string out = myUrlManager->shorten(it->url);
-    out = myUrlManager->restore(out);
-    if (out != it->url)
+    bool result = true;
+    urlManager* myUrlManager = new urlManager();
+    for (auto it = begin(testCases); it != end(testCases);++it)
     {
-      result = false;
-      std::cout<<"Fail!  Expected \""<<it->url<<"\", but received \""<<out<<"\"\n";
+      std::string out = myUrlManager->shorten(it->url);
+      out = myUrlManager->restore(out);
+      if (out != it->url)
+      {
+        result = false;
+        std::cout<<"Fail!  Expected \""<<it->url<<"\", but received \""<<out<<"\"\n";
+      }
     }
+    if(result)
+      std::cout<<"Pass!"<<"\n";
+    return result;
   }
-  if(result)
-    std::cout<<"Pass!"<<"\n";
-  return result;
 }
 int main()
 {

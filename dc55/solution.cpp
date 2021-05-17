@@ -6,7 +6,6 @@
 //  index in an ascii/letter representation becomes short URl
 /*urlManager::urlManager()
 {}*/
-
 std::string urlManager::shorten(std::string in)
 {
     std::string output = "";

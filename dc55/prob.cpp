@@ -16,7 +16,9 @@ std::string prob(void)
   "  Hint: What if we enter the same URL twice?\n\n";
   return output;
 }
-void printProb(void)
-{
-  std::cout << prob();
+extern "C" {
+  void printProb(void)
+  {
+    std::cout << prob();
+  }
 }
