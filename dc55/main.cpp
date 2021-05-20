@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <sstream>
 #include "prob.h"
 #include "main.h"
 #include "solution.h"
@@ -15,7 +16,7 @@ public:
     std::string url;
 };
 extern "C" {
-  BUTT bool unitTest(){
+  char * unitTest(){
     std::vector<testCase> testCases;
 
     testCases.push_back(testCase("y33t"));
@@ -31,6 +32,8 @@ extern "C" {
 
     bool result = true;
     urlManager* myUrlManager = new urlManager();
+    int counter = 0;
+    std::stringstream buffer;
     for (auto it = begin(testCases); it != end(testCases);++it)
     {
       std::string out = myUrlManager->shorten(it->url);
@@ -38,17 +41,28 @@ extern "C" {
       if (out != it->url)
       {
         result = false;
-        std::cout<<"Fail!  Expected \""<<it->url<<"\", but received \""<<out<<"\"\n";
+        buffer<<"Fail at case "<<counter<<"!  Expected \""<<it->url<<"\", but received \""<<out<<"\"\n";
       }
+      counter++;
     }
     if(result)
-      std::cout<<"Pass!"<<"\n";
-    return result;
+      buffer<<"Pass!";
+
+    std::string str = buffer.str();
+    char *cstr = new char[str.length() + 1];//todo - clean up this memory leak
+    strcpy(cstr, str.c_str());
+    printf("returning address: %p\n", cstr);
+    return cstr;
   }
+}
+void freeme(char *ptr)
+{
+    printf("freeing address: %p\n", ptr);
+    free(ptr);
 }
 int main()
 {
   //printProb();
-  unitTest();
+  std::cout << unitTest();
   return 0;
 }
