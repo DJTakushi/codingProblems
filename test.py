@@ -1,6 +1,6 @@
 import os
 import ctypes
-
+import sys
 def getProblem(problemDir):
     filePath = problemDir+"/readme.md"
     with open(filePath) as f:
@@ -25,21 +25,39 @@ def testMake(problemDir):
     print("done with testMake")
 
 def unitTest(problemDir):
-    libc_main = ctypes.CDLL("/codingProblems/dc55/libmain_lib.so")
+    useCppUnitTest = False
+    if useCppUnitTest:
+        libc_main = ctypes.CDLL("/codingProblems/dc55/libmain_lib.so")
 
-    #helpful!
-    #https://stackoverflow.com/questions/13445568/python-ctypes-how-to-free-memory-getting-invalid-pointer-error
-    libc_main.unitTest.restype = ctypes.c_void_p
-    ptr = libc_main.unitTest()
-    print("    In Python: unitTest returns \""+ str(ctypes.cast(ptr,ctypes.c_char_p).value) + "\"")
-    print("    pointer = "+hex(ptr))
-    libc_main.freeme.argtypes = ctypes.c_void_p,
-    libc_main.freeme(ptr)
+        libc_main.unitTest.restype = ctypes.c_void_p
+        ptr = libc_main.unitTest()
+        print("    In Python: unitTest returns \""+ str(ctypes.cast(ptr,ctypes.c_char_p).value) + "\"")
+        print("    pointer = "+hex(ptr))
+        libc_main.freeme.argtypes = ctypes.c_void_p,
+        libc_main.freeme(ptr)
+    else:
+        sys.path.insert(1,problemDir) #add directory to paths
+        import testLocal
+        os.chdir(problemDir) #change to testLocal dir to use relative paths
+        print(testLocal.testSolution())
+        os.chdir("..")#return to calling directory
 
-def sample():
-    problemDir = "dc55"
-    getProblem(problemDir)
-    testMake(problemDir)
-    unitTest(problemDir) #currently breaks with the current return type
-
-sample()
+def getTestDirectories():
+    testDirs = [] #add test directories here
+    testDirs.append("dc55")
+    #testDirs.append("dc55_2")
+    return testDirs
+def buildAll():
+    testDirs = getTestDirectories()
+    for i in testDirs:
+        getProblem(i)
+        testMake(i)
+def testAll():
+    testDirs = getTestDirectories()
+    for i in testDirs:
+        unitTest(i)
+def buildAllTestAll():
+    buildAll()
+    testAll()
+if __name__=="__main__":
+    buildAllTestAll()

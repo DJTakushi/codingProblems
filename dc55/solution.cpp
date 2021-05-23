@@ -38,3 +38,45 @@ std::string urlManager::restore(std::string in){
     //std::cout <<"urlManager::restore output = "<<output<<"\n";
     return output;
 }
+
+extern "C"
+{
+  void* createUrlManager(void){
+    return new(std::nothrow) urlManager;
+  }
+  void deleteUrlManager(void* ptr){
+    delete /*(std::nothrow)*/ (urlManager*)ptr;
+  }
+  char* shorten(void* manager, char* input){
+    try
+    {
+      urlManager* ref = reinterpret_cast<urlManager*>(manager);
+      std::string output = ref->shorten(std::string(input));
+      return createNewCharPtr(output);
+    }
+    catch(...)
+    {return NULL;}
+  }
+  char* restore(void* manager, char* query){
+    try
+    {
+      urlManager* ref = reinterpret_cast<urlManager*>(manager);
+      std::string output = ref->restore(std::string(query));
+      return createNewCharPtr(output);
+    }
+    catch(...)
+    {return NULL;}
+  }
+}
+char * createNewCharPtr(std::string str)
+{
+  char *cstr = new char[str.length() + 1];//todo - clean up this memory leak
+  strcpy(cstr, str.c_str());
+  //printf("returning address: %p\n", cstr);
+  return cstr;
+}
+void freeCharPtr(char *ptr)
+{
+    //printf("freeing address: %p\n", ptr);
+    free(ptr);
+}

@@ -17,3 +17,8 @@ First problem using python integration and a readme.md.  Would like to create a 
     - extern C required to make external
 3.  https://stackoverflow.com/questions/2164827/explicitly-exporting-shared-library-functions-in-linux
     - _declspec(dllexport), but this seems to be related to visibility, an unrelated topic
+4.  https://stackoverflow.com/questions/13445568/python-ctypes-how-to-free-memory-getting-invalid-pointer-error
+    - example of freeing memroy
+5.  https://stackoverflow.com/questions/1615813/how-to-use-c-classes-with-ctypes
+    - accessing cpp objects in python difficult\]
+    - possible with c-style linking!
