@@ -24,19 +24,14 @@ def testMake(problemDir):
     sys.stdout = open(testLogFilePath, "w")
 
     cmakeFilePath = problemDir+"/CMakeLists.txt"
-    #https://stackoverflow.com/questions/3197509/redirecting-stdio-from-a-command-in-os-system-in-python
     if os.path.isfile(cmakeFilePath):
         from subprocess import Popen, PIPE
-        #os.system("cmake "+cmakeFilePath)
         p = Popen(['cmake','CMakeLists.txt'], cwd=dirpath,stdout=PIPE, stderr=PIPE, stdin=PIPE)
         output = p.stdout.read()
-        print(output)
 
-        #os.system("make -C " + problemDir)
         p = Popen(['make'], cwd=dirpath, stdout=PIPE, stderr=PIPE, stdin=PIPE)
         output += p.stdout.read()
         print(output)
-
         print("done with testMake")
     else:
         print("no "+ cmakeFilePath + "; assuming python solution")
@@ -44,22 +39,12 @@ def testMake(problemDir):
     sys.stdout = sys.__stdout__
 
 def unitTest(problemDir):
-    useCppUnitTest = False
-    if useCppUnitTest:
-        libc_main = ctypes.CDLL("/codingProblems/dc55/libmain_lib.so")
-
-        libc_main.unitTest.restype = ctypes.c_void_p
-        ptr = libc_main.unitTest()
-        print("    In Python: unitTest returns \""+ str(ctypes.cast(ptr,ctypes.c_char_p).value) + "\"")
-        print("    pointer = "+hex(ptr))
-        libc_main.freeme.argtypes = ctypes.c_void_p,
-        libc_main.freeme(ptr)
-    else:
-        sys.path.insert(1,os.getcwd()+"/"+problemDir) #add directory to paths
-        import testLocal
-        os.chdir(problemDir) #change to testLocal dir to use relative paths
-        print(testLocal.testSolution())
-        os.chdir("..")#return to calling directory
+    relaventDir = os.getcwd()+"/"+problemDir
+    libName = problemDir+'.testLocal'
+    import importlib
+    myLib = importlib.import_module(libName)
+    testReturn = myLib.runTest()
+    print(testReturn + " "+problemDir)
 
 def getTestDirectories():
     testDirs = [] #add test directories here
