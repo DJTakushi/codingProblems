@@ -49,6 +49,9 @@ def unitTest(problemDir):
 def getTestDirectories():
     testDirs = [] #add test directories here
     testDirs.append("az01")
+    testDirs.append("az02")
+    testDirs.append("az03")
+    testDirs.append("az04")
     testDirs.append("dc55")
     return testDirs
 def buildAll():
