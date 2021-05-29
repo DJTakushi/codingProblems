@@ -52,6 +52,7 @@ def getTestDirectories():
     testDirs.append("az02")
     testDirs.append("az03")
     testDirs.append("az04")
+    testDirs.append("az05")
     testDirs.append("dc55")
     return testDirs
 def buildAll():
