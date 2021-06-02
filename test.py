@@ -70,6 +70,14 @@ def getTestDirectories():
 
     testDirs.append("dc01")
     testDirs.append("dc02")
+    testDirs.append("dc03")
+    testDirs.append("dc04")
+    testDirs.append("dc05")
+    testDirs.append("dc05")
+    testDirs.append("dc06")
+    testDirs.append("dc07")
+    testDirs.append("dc08")
+    testDirs.append("dc09")
 
     testDirs.append("dc55")
     return testDirs
