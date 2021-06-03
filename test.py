@@ -79,6 +79,21 @@ def getTestDirectories():
     testDirs.append("dc08")
     testDirs.append("dc09")
 
+    #testDirs.append("dc10") #currently not working
+    #testDirs.append("dc11") #currently fails
+    #testDirs.append("dc12") #currently not startec
+    #testDirs.append("dc13") #test fails
+    testDirs.append("dc14")
+    #testDirs.append("dc15") #unimplemented
+    testDirs.append("dc16")
+    testDirs.append("dc17")
+    testDirs.append("dc18") #impractical solution
+    #testDirs.append("dc19") #fails
+    testDirs.append("dc20")
+    testDirs.append("dc21")
+    testDirs.append("dc22")
+    testDirs.append("dc23")
+
     testDirs.append("dc55")
     return testDirs
 def buildAll():

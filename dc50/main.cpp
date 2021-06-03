@@ -1,7 +1,6 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include "prob.h"
 #include "main.h"
 #include "solution.h"
 //#include "test.h"
