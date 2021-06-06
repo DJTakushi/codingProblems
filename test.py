@@ -73,7 +73,6 @@ def getTestDirectories():
     testDirs.append("dc03")
     testDirs.append("dc04")
     testDirs.append("dc05")
-    testDirs.append("dc05")
     testDirs.append("dc06")
     testDirs.append("dc07")
     testDirs.append("dc08")
@@ -94,6 +93,7 @@ def getTestDirectories():
     testDirs.append("dc22")
     testDirs.append("dc23")
 
+    testDirs.append("dc50")
     testDirs.append("dc55")
     return testDirs
 def buildAll():

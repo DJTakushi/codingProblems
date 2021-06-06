@@ -11,3 +11,7 @@ For example, given the following tree: \
   3  2  4  5 \
 
 You should return 45, as it is (3 + 2) * (4 + 5).
+
+## Notes
+- Looks like ctypes can't use class functions, so additional c-functions are required for use in python
+  - https://stackoverflow.com/questions/16268140/python-using-ctypes-to-create-c-class-wrapper

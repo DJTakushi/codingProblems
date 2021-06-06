@@ -1,9 +1,11 @@
+// DEPRECATED into common test structure!
 #include <string>
 #include <vector>
 #include <iostream>
 #include "main.h"
 #include "solution.h"
-//#include "test.h"
+
+
 
 class testCase{
 public:
@@ -35,7 +37,6 @@ bool unitTest(){
   head->r = new node("*");
   head->r->l = new node("4");
   head->r->r = new node("5");
-  testCases.push_back(testCase(head,120));
 
   head = new node("/");
   head->l = new node("-");
@@ -71,7 +72,6 @@ bool unitTest(){
 }
 int main()
 {
-  printProb();
   unitTest();
   return 0;
 }

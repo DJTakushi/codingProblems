@@ -6,8 +6,10 @@ def configureSolutionLibrary():
     myLib.createUrlManager.restype = ctypes.c_void_p
     myLib.shorten.argTypes = [ctypes.c_void_p,ctypes.c_char_p]
     myLib.shorten.restype = ctypes.c_void_p
+
     myLib.restore.argTypes = [ctypes.c_void_p,ctypes.c_char_p]
     myLib.restore.restype = ctypes.c_void_p
+
     myLib.deleteUrlManager.argTypes = [ctypes.c_void_p]
     myLib.freeCharPtr.argtypes = [ctypes.c_void_p]
     return myLib

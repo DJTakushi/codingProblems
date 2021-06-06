@@ -1,2 +1,5 @@
 #include "main.h"
-int myFunction (node* head);
+extern "C"
+{
+  int myFunction (node* head);
+}
