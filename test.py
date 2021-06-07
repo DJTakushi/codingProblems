@@ -39,12 +39,34 @@ def testMake(problemDir):
     sys.stdout = sys.__stdout__
 
 def unitTest(problemDir):
-    relaventDir = os.getcwd()+"/"+problemDir
-    libName = problemDir+'.testLocal'
-    import importlib
-    myLib = importlib.import_module(libName)
-    testReturn = myLib.runTest()
-    print(testReturn + " "+problemDir)
+    def getTestLogPath(problemDir):
+        dirpath = os.path.dirname(os.path.abspath(__file__))
+        return dirpath+'/'+problemDir+'/test.stdout.log'
+    def checkTestLog(problemDir):
+        fileInput = open(getTestLogPath(problemDir),"r")
+        result = ""
+        for i in fileInput.readlines():
+            if "FAIL:" in i:
+                result = "Fail"
+            if "ERROR:" in i:
+                result = "Error"
+        if result == "":
+            result = "Pass"
+        return result
+    def testSolution(problemDir):
+        import unittest
+        loader = unittest.TestLoader()
+        tests=loader.discover(problemDir)
+        outFile = getTestLogPath(problemDir)
+        stdout = sys.stdout
+        sys.stdout = open(outFile, 'w')
+        testRunner=unittest.runner.TextTestRunner(stream=sys.stdout)
+        testRunner.run(tests) #TODO - process the direct output of this to process results (instead of log)
+        sys.stdout.close()
+        sys.stdout = stdout
+        return
+    testSolution(problemDir)
+    print(checkTestLog(problemDir) + " "+problemDir)
 
 def getTestDirectories():
     testDirs = [] #add test directories here

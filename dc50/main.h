@@ -1,7 +1,7 @@
 #ifndef __MAIN_H__
 #define __MAIN_H__
 #include <string>
-#include <iostream>
+// #include <iostream>
 class node
 {
 public:
@@ -15,7 +15,7 @@ public:
     val = std::string(v);
     l = NULL;
     r = NULL;
-    //std::cout <<"new node at address " << this<< " val = "<< this->val << std::endl;
+    // std::cout <<"new node at address " << this<< " val = "<< this->val << std::endl;
   }
   void setL(node* n)
   {
