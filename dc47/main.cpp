@@ -4,6 +4,7 @@
 #include "prob.h"
 //#include "test.h"
 #include "prob.h"
+#include "solution.h"
 
 class testCase{
 public:

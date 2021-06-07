@@ -21,25 +21,3 @@ void printProb(void)
 {
   std::cout << prob();
 }
-
-int myFunction(std::vector<int> prices){
-  int recordLow = 0;
-  int recordHigh = 0;
-  int currentLow = 0;
-
-  for(int i = 0; i < prices.size(); i++){
-    if(prices[i]<prices[currentLow])
-    {
-      currentLow = i;
-    }
-    int recordDiff = prices[recordHigh]-prices[recordLow];
-    int currentDiff = prices[i]-prices[currentLow];
-
-    if(currentDiff > recordDiff)
-    {
-      recordLow = currentLow;
-      recordHigh = i;
-    }
-  }
-  return prices[recordHigh]-prices[recordLow];
-}
