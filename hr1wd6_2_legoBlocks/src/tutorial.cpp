@@ -2,7 +2,9 @@
 #include <iostream>
 // #include <string>
 #include "include/tutorialConfig.h"
-
+#ifdef USE_MYMATH
+	#include "MathFunctions.h"
+#endif
 using namespace std;
 void printProjectInfo(){
 	string pName = PROJECT_NAME;
@@ -19,6 +21,13 @@ void printProjectInfo(){
 int main(int argc, char *argv[]) {
 	printProjectInfo();
 	const double inputValue = std::stod(argv[1]);
+	#ifdef USE_MYMATH
+		const double outputValue = mysqrt(inputValue);
+		cout <<"mysqrt("<<inputValue<<")="<<outputValue<<endl;
+	#else
+		const double outputValue = mysqrt(inputValue);
+	#endif
+
 	for(int i = 1; i < argc;i++)
 	{
 		cout << argv[i] << endl;
