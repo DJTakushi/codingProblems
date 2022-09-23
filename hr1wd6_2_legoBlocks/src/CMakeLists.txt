@@ -12,7 +12,6 @@ option(USE_MYMATH "Use tutorial provided math implementation" ON)
 if(USE_MYMATH)
   add_subdirectory(MathFunctions)
   list(APPEND EXTRA_LIBS MathFunctions)
-  list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/MathFunctions")
 endif()
 
 # create .h file from configurable .h.in file into output location
@@ -24,5 +23,4 @@ target_link_libraries(${PROJECT_NAME} PUBLIC ${EXTRA_LIBS})
 # add include directories ; this adds the binary directory
 target_include_directories(tutorial PUBLIC
                             "${PROJECT_BINARY_DIR}"
-                            ${EXTRA_INCLUDES}
                           )
