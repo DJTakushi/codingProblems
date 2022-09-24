@@ -19,19 +19,28 @@ void printProjectInfo(){
 }
 
 int main(int argc, char *argv[]) {
-	printProjectInfo();
-	const double inputValue = std::stod(argv[1]);
-	#ifdef USE_MYMATH
-		const double outputValue = mysqrt(inputValue);
-		cout <<"mysqrt("<<inputValue<<")="<<outputValue<<endl;
-	#else
-		const double outputValue = mysqrt(inputValue);
-	#endif
-
-	for(int i = 1; i < argc;i++)
+	double inputValue, outputValue;
+	switch(argc)
 	{
-		cout << argv[i] << endl;
+		case 1:
+			printProjectInfo();
+			break;
+		case 2:
+			inputValue = std::stod(argv[1]);
+			#ifdef USE_MYMATH
+				outputValue = mysqrt(inputValue);
+			#else
+				outputValue = mysqrt(inputValue);
+			#endif
+			std::cout << "The square root of " << inputValue << " is " << outputValue
+		            << std::endl;
+			break;
+		default:
+			for(int i = 1; i < argc;i++)
+			{
+				cout << argv[i] << endl;
+			}
+		break;
 	}
-
 	return 0;
 }
