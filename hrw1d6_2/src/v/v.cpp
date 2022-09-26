@@ -5,7 +5,7 @@ vector<vector<int>> getVector(int l, int max, vector<int> vIn){
 				max = max block length
 				vIn = previous row **/
 		string vInS;
-		cout <<"getVector("<<l<<","<<max<<")"<<endl;
+		// cout <<"getVector("<<l<<","<<max<<")"<<endl;
 		vector<vector<int>> out;
 		if(l>=0)
 		{
@@ -32,8 +32,7 @@ vector<vector<int>> getVector(int l, int max, vector<int> vIn){
 						}
 					}
 				}
-
-		cout <<"getVector("<<l<<","<<max<<") returns "<<out.size()<<" options"<<endl;
+		// cout <<"getVector("<<l<<","<<max<<") returns "<<out.size()<<" options"<<endl;
     return out;
 }
 set<int> getCrackIdx(vector<int> i){
@@ -57,7 +56,7 @@ bool vectorsCrack(vector<int> a, vector<int>b){
 	{
 		if(bC.find(*it)!=bC.end())
 		{
-			// cout <<*it<<" found in aC and bC.  Returning false"<<endl;
+			cout <<*it<<" found in aC and bC.  Returning false"<<endl;
 			return false;
 		}
 	}
@@ -124,7 +123,42 @@ int solve(int n, int m){
 
 	return out;
 }
+int solve2(int n, int m){
+	/** n = height of wall
+	m = width of wall
+	returns number of possible combinations **/
+	int out = 0;
+	vector<int> dummy;
+	vector<vector<int>> uro = getVector(m,4, dummy);  //unrestricted row options
+	cout << "uro:"<<endl;
+	printVectorVector(uro);
+	set<int>crackIdxsBlank;
+	for(int i = 0; i < m; i++)
+		crackIdxsBlank.insert(i);
+	if(n >0){
+			out = buildWalls(n,&uro,crackIdxsBlank);
+	}
+	return out;
+}
 
+int buildWalls(int n, vector<vector<int>>* options, set<int> crackIdxs)
+{/** n - remaining height
+	options = pointer to options for row (uro)
+	crackIdxs indeces where there is a crack.  may be empty!**/
+	int output = 0;
+	if(n==0){
+		if(crackIdxs.size()==0)output = 1;//no cracks exist - good
+		else output = 0;//cracks exist - bad
+	}
+	else
+	{
+		for(auto it= options->begin(); it != options->end(); it++){//can actually just look at options as a vector of set<ints>
+			set<int>crackIdxs_t = setAnd(crackIdxs, getCrackIdx(*it));//continue any shared cracks, forgive any that are mended
+			output+=buildWalls(n-1,options,crackIdxs_t);//increment by recursive call
+		}
+	}
+	return output;
+}
 
 void printVectorVector(vector<vector<int>> v)
 {
@@ -153,4 +187,12 @@ void printSet(set<int> ms, string prefix){
 	for(auto i = ms.begin();i!=ms.end();i++)cout << *i << " ";
 	cout << endl;
 	return;
+}
+set<int> setAnd(set<int> a,set<int>b){
+	set<int> out;
+	for(auto it = a.begin(); it!=a.end(); it++)
+	{
+		if(b.find(*it)!=b.end()) out.insert(*it);
+	}
+	return out;
 }
