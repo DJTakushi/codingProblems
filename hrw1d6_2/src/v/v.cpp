@@ -41,24 +41,6 @@ set<int> getCrackIdx(vector<int> i){
 		sum+=*it;
 		out.insert(sum);
 	}
-
-	return out;
-}
-int solve2(int n, int m){
-	/** n = height of wall
-	m = width of wall
-	returns number of possible combinations **/
-	int out = 0;
-	vector<int> dummy;
-	vector<vector<int>> uro = getVector(m,4, dummy);  //unrestricted row options
-	// cout << "uro:"<<endl;
-	//printVectorVector(uro);
-	set<int>crackIdxsBlank;
-	for(int i = 0; i < m; i++)
-		crackIdxsBlank.insert(i);
-	if(n >0){
-			out = buildWalls(n,&uro,crackIdxsBlank);
-	}
 	return out;
 }
 set<int> setAnd(set<int> a,set<int>b){
@@ -86,6 +68,23 @@ int buildWalls(int n, vector<vector<int>>* options, set<int> crackIdxs)
 		}
 	}
 	return output;
+}
+int solve2(int n, int m){
+	/** n = height of wall
+	m = width of wall
+	returns number of possible combinations **/
+	int out = 0;
+	vector<int> dummy;
+	vector<vector<int>> uro = getVector(m,4, dummy);  //unrestricted row options
+	// cout << "uro:"<<endl;
+	//printVectorVector(uro);
+	set<int>crackIdxsBlank;
+	for(int i = 0; i < m; i++)
+		crackIdxsBlank.insert(i);
+	if(n >0){
+			out = buildWalls(n,&uro,crackIdxsBlank);
+	}
+	return out;
 }
 #ifdef PRINT_FUNCTIONS
 void printVectorVector(vector<vector<int>> v)
