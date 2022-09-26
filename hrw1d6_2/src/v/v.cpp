@@ -69,7 +69,7 @@ int buildWalls(int n, vector<vector<int>>* options, set<int> crackIdxs)
 	}
 	return output;
 }
-int solve2(int n, int m){
+int legoBlocks(int n, int m){
 	/** n = height of wall
 	m = width of wall
 	returns number of possible combinations **/

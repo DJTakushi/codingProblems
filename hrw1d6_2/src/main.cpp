@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
         // vector<vector<int>> v = getVector(m,4,vIn);
         // printVector(v);
 				// cout << "solve("<<n<<","<<m<<"):"<<endl;
-				int out = solve2(n,m);
+				int out = legoBlocks(n,m);
 				cout <<"answer = "<<out<<endl;
       }
       // getVector(0,vIn);
