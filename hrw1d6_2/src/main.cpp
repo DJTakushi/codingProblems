@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
         // vector<int> vIn;
         // vector<vector<int>> v = getVector(m,4,vIn);
         // printVector(v);
-				cout << "solve("<<n<<","<<m<<"):"<<endl;
+				// cout << "solve("<<n<<","<<m<<"):"<<endl;
 				int out = solve2(n,m);
 				cout <<"answer = "<<out<<endl;
       }

@@ -5,7 +5,6 @@ vector<vector<int>> getVector(int l, int max, vector<int> vIn){
 				max = max block length
 				vIn = previous row **/
 		string vInS;
-		// cout <<"getVector("<<l<<","<<max<<")"<<endl;
 		vector<vector<int>> out;
 		if(l>=0)
 		{
@@ -32,7 +31,6 @@ vector<vector<int>> getVector(int l, int max, vector<int> vIn){
 						}
 					}
 				}
-		// cout <<"getVector("<<l<<","<<max<<") returns "<<out.size()<<" options"<<endl;
     return out;
 }
 set<int> getCrackIdx(vector<int> i){
@@ -46,83 +44,6 @@ set<int> getCrackIdx(vector<int> i){
 
 	return out;
 }
-bool vectorsCrack(vector<int> a, vector<int>b){
-	set<int> aC = getCrackIdx(a);
-	set<int> bC = getCrackIdx(b);
-	// cout << "vectorsCrack("<<getVectorString(a)<<","<<getVectorString(b)<<"):"<<endl;
-	// printSet(aC, "aC:");
-	// printSet(bC, "bC:");
-	for(auto it = aC.begin(); it!=aC.end();it++)
-	{
-		if(bC.find(*it)!=bC.end())
-		{
-			cout <<*it<<" found in aC and bC.  Returning false"<<endl;
-			return false;
-		}
-	}
-
-	// cout <<" no cracks found.  Returning true"<<endl;
-	return true;
-}
-
-vector<vector<int>> getComplimentOptions(vector<int> base, vector<vector<int>> options){
-	// vector<vector<int>> out;
-	// if(base.size()==0) out = options;
-	// else{
-		vector<vector<vector<int>>::iterator> toErase;
-		for(auto it= options.begin(); it!=options.end();it++)
-			if(!vectorsCrack(base, *it))
-			{
-				cout<<"  erasing "<<getVectorString(*it)<<endl;
-				toErase.push_back(it);
-			}
-
-		for(auto it=toErase.rbegin(); it != toErase.rend();it++)//iterate backwards to keep earlier indexing intact
-			options.erase(*it);
-	// }
-		string baseString = getVectorString(base);
-		cout<<"getComplimentOptions("<<getVectorString(base)<<",uro):"<<endl;
-		printVectorVector(options);
-	return options;
-}
-int solve(int n, int m){
-	/** n = height of wall
-	m = width of wall
-	returns number of possible combinations **/
-	int out = 0;
-	vector<int> dummy;
-	vector<vector<int>> uro = getVector(m,4, dummy);  //unrestricted row options
-	if(n>=1){
-		out = uro.size();
-		vector<vector<int>> baseRow = uro;
-		cout <<"BaseRow("<<1<<"): "<<endl;
-		printVectorVector(baseRow);
-		for(int i = 1; i < n; i++)
-		{
-			vector<vector<int>> compliments;
-			for(auto vit = baseRow.begin(); vit != baseRow.end();vit++)
-			{
-				vector<vector<int>> compliments_t = getComplimentOptions(*vit, uro);
-				compliments.insert(compliments.end(), compliments_t.begin(), compliments_t.end());
-			}
-			baseRow.clear();
-			baseRow.insert(baseRow.end(), compliments.begin(),compliments.end());
-
-			cout <<"BaseRow(new)("<<i<<"): "<<endl;
-			printVectorVector(baseRow);
-			out=baseRow.size(); //duplicates included since they take different paths
-
-			//remove duplicates by putting into a set and then back into a vector
-			// set<vector<int>> setTemp;
-			// for(auto it = baseRow.begin();it!=baseRow.end();it++)setTemp.insert(*it);
-			// baseRow.clear();
-			//
-			// for(auto it = setTemp.begin();it!=setTemp.end();it++)baseRow.push_back(*it);
-		}
-	}
-
-	return out;
-}
 int solve2(int n, int m){
 	/** n = height of wall
 	m = width of wall
@@ -130,8 +51,8 @@ int solve2(int n, int m){
 	int out = 0;
 	vector<int> dummy;
 	vector<vector<int>> uro = getVector(m,4, dummy);  //unrestricted row options
-	cout << "uro:"<<endl;
-	printVectorVector(uro);
+	// cout << "uro:"<<endl;
+	//printVectorVector(uro);
 	set<int>crackIdxsBlank;
 	for(int i = 0; i < m; i++)
 		crackIdxsBlank.insert(i);
@@ -140,7 +61,14 @@ int solve2(int n, int m){
 	}
 	return out;
 }
-
+set<int> setAnd(set<int> a,set<int>b){
+	set<int> out;
+	for(auto it = a.begin(); it!=a.end(); it++)
+	{
+		if(b.find(*it)!=b.end()) out.insert(*it);
+	}
+	return out;
+}
 int buildWalls(int n, vector<vector<int>>* options, set<int> crackIdxs)
 {/** n - remaining height
 	options = pointer to options for row (uro)
@@ -159,7 +87,7 @@ int buildWalls(int n, vector<vector<int>>* options, set<int> crackIdxs)
 	}
 	return output;
 }
-
+#ifdef PRINT_FUNCTIONS
 void printVectorVector(vector<vector<int>> v)
 {
 	for(auto it = v.begin(); it!=v.end();it++)
@@ -188,11 +116,4 @@ void printSet(set<int> ms, string prefix){
 	cout << endl;
 	return;
 }
-set<int> setAnd(set<int> a,set<int>b){
-	set<int> out;
-	for(auto it = a.begin(); it!=a.end(); it++)
-	{
-		if(b.find(*it)!=b.end()) out.insert(*it);
-	}
-	return out;
-}
+#endif
