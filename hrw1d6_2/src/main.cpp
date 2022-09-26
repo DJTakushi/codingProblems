@@ -40,9 +40,14 @@ int main(int argc, char* argv[])
         // cout <<" b="<<b<<endl;
         m = stoi(b);
         cout << "n="<<n<<", m="<<m << endl;
+        // vector<int> vIn;
+        // vector<vector<int>> v = getVector(m,4,vIn);
+        // printVector(v);
+				cout << "solve("<<n<<","<<m<<"):"<<endl;
+				int out = solve(n,m);
+				cout <<"answer = "<<out<<endl;
       }
-      vector<int> vIn;
-      getVector(0,vIn);
+      // getVector(0,vIn);
       break;
   }
   return 0;
