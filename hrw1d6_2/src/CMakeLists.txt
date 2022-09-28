@@ -25,7 +25,9 @@ target_include_directories(${PROJECT_NAME} PUBLIC
                             "${PROJECT_BINARY_DIR}"
                           )
 
+# install target to bin (/usr/local/bin)
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+# install include/config.h to /usr/local/??? TODO
 install(FILES "${PROJECT_BINARY_DIR}/include/config.h" DESTINATION ${MY_NAME}/include)
 
 # TODO test
