@@ -44,52 +44,44 @@ class Solution:
         iTgt = self.findLastImpactIndex(arr, x)
         idxL = iTgt
         idxR = iTgt+1
-        l = arr[idxL]
-        r = 0
-        if idxR < len(arr):
-            r = arr[idxR]
-        else:
-            r = None
+
         while len(cL.list) < k:
+            l = None
+            if 0 <= idxL and idxL < len(arr):
+                l = arr[idxL]
+            r = None
+            if 0 <= idxR and idxR < len(arr):
+                r = arr[idxR]
+
             quantity = 1
+            incrementer = 1#default right
+            idxSelect = idxR #default right
+            incumbent = r #default right
             if closerThan(l, r, x):
-                idx_X_next = idxL-1
-                while idx_X_next >= 0:
-                    if l==arr[idx_X_next]:
-                        quantity+=1
-                        idx_X_next-=1
-                        if idx_X_next < 0:
-                            break
-                    else:
-                        break
-                qRemaining = cL.addToEnd(l,quantity)
-                if qRemaining > 0:
-                    break
+                #update vales if going left is better
+                incrementer = -1
+                idxSelect = idxL
+                incumbent = l
+
+
+            idx_X_next = idxSelect + incrementer
+            while 0 <= idx_X_next and idx_X_next < len(arr):
+                ## increment quantity while duplicates are found iterating along incrementer
+                if incumbent == arr[idx_X_next]:
+                    quantity+=1
+                    idx_X_next+= incrementer
                 else:
-                    if 0 <= idx_X_next:
-                        idxL = idx_X_next
-                        l = arr[idxL]
-                    else:
-                        l = None
+                    break
+            qRemaining = cL.addToEnd(incumbent,quantity)
+            if qRemaining > 0:
+                # list full - we're done here
+                break
             else:
-                idx_X_next = idxR+1
-                while idx_X_next < len(arr):
-                    if r==arr[idx_X_next]:
-                        quantity+=1
-                        idx_X_next+=1
-                        if idx_X_next < len(arr):
-                            break
-                    else:
-                        break
-                qRemaining = cL.addToEnd(r,quantity)
-                if qRemaining > 0:
-                    break
+                if incrementer == 1: # went right
+                    idxR = idx_X_next
                 else:
-                    if idx_X_next < len(arr):
-                        idxR = idx_X_next
-                        r = arr[idxR]
-                    else:
-                        r = None
+                    idxL = idx_X_next
+
         o = cL.list
         o.sort()
         return o
