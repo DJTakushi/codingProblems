@@ -9,121 +9,87 @@ import json
 def tprint(s):
     if False:
         print(s)
-
 class closestList:
     def __init__(self, k, x):
         self.k = k
         self.x = x
         self.list = []
-    def add(self, i,q):
-        o = False
-        insertIdx = len(self.list)
-        # try:
-        #     while insertIdx >= 0 and closerThan(i,self.list[insertIdx], self.x):
-        #         insertIdx-=1
-        # except:
-        #     pass
-
-        if insertIdx!=0:
-            # g = True
-            while True:
-                if insertIdx > 0:
-                    incumbent = self.list[insertIdx-1]
-                    if closerThan(i,incumbent, self.x):
-                        insertIdx-=1
-                    else:
-                        break
-                else:
-                    break
-
-        tprint("i: "+str(i)+", insertIdx="+str(insertIdx))
-        while insertIdx < self.k and q > 0:
-            self.list.insert(insertIdx,i)
-            q-=1
-            tprint("inserting i:"+str(i)+"; list = "+str(self.list))
-        o = q==0
-        while len(self.list)>self.k:
-            self.list.pop()
-        return o
-
+    def addToEnd(self,i,q):
+        # print("addToEnd("+str(i)+","+str(q)+")")
+        while q > 0:
+            if len(self.list) < self.k:
+                self.list.append(i)
+            else:
+                break
+            q -=1
+        # print("  returning "+str(q)+" with list: "+str(self.list))
+        return q
 def closerThan(a, b, x):
     o = False
-    aC = abs(a-x)
-    bC = abs(b-x)
-    if aC < bC or (aC==bC and a<b):
-        tprint(str(a)+" closer to "+str(x)+" than "+str(b) + " ["+str(aC)+" vs "+str(bC)+"]")
+    if a != None and b == None:
         o = True
+    elif a == None and b != None:
+        o = False
+    else:
+        aC = abs(a-x)
+        bC = abs(b-x)
+        if aC < bC or (aC==bC and a<b):
+            tprint(str(a)+" closer to "+str(x)+" than "+str(b) + " ["+str(aC)+" vs "+str(bC)+"]")
+            o = True
     return o
-
-
 class Solution:
     def findClosestElements(self, arr, k: int, x: int):
         o = [ ]
         cL = closestList(k,x)
-        NAIVE = False
-        if NAIVE:
-            for i in arr:
-                cL.add(i,1)
+        iTgt = self.findLastImpactIndex(arr, x)
+        idxL = iTgt
+        idxR = iTgt+1
+        l = arr[idxL]
+        r = 0
+        if idxR < len(arr):
+            r = arr[idxR]
         else:
-            iTgt=self.findLastImpactIndex(arr,x)
-            print("iTgt:"+str(iTgt))
-            OldStyle=False
-            if OldStyle:
-                i = iTgt
-                good=True
-                print("counting down at i="+str(i))
-                while good:
-                    try:
-                        good = cL.add(arr[i],1)
-                        i-=1
-                    except:
-                        print("broke!!! i="+str(i))
-                        good = False
-                    good = good and i >= 0
-                good = True
-                i = iTgt+1 # don't add arr[iTgt] twice!
-                print("counting up at i="+str(i))
-                while good:
-                    try:
-                        good = cL.add(arr[i],1)
-                        i+=1
-                    except:
-                        good = False
-                    # good = good and i < len(arr)
+            r = None
+        while len(cL.list) < k:
+            quantity = 1
+            if closerThan(l, r, x):
+                idx_X_next = idxL-1
+                while idx_X_next >= 0:
+                    if l==arr[idx_X_next]:
+                        quantity+=1
+                        idx_X_next-=1
+                        if idx_X_next < 0:
+                            break
+                    else:
+                        break
+                qRemaining = cL.addToEnd(l,quantity)
+                if qRemaining > 0:
+                    break
+                else:
+                    if 0 <= idx_X_next:
+                        idxL = idx_X_next
+                        l = arr[idxL]
+                    else:
+                        l = None
             else:
-                idxL = iTgt
-                idxR = iTgt+1
-                continueLeft = idxL >= 0
-                continueRight = idxR < len(arr)
-                while continueLeft or continueRight:
-                    if continueLeft:
-                        # print("  idxL:"+str(idxL))
-                        idxL2 = idxL
-                        quantity = 0 # counter for quanitty of this element
-                        good = True
-                        while good:
-                            quantity+=1
-                            good = False
-                            idxL2-=1
-                            if idxL2 >=0:
-                                good = arr[idxL2] == arr[idxL]
-                        continueLeft = cL.add(arr[idxL], quantity)
-                        idxL = idxL2
-                        continueLeft = idxL >=0
-                    if continueRight:
-                        # print("  idxR:"+str(idxR))
-                        idxR2 = idxR
-                        quantity = 0
-                        good = True
-                        while good:
-                            quantity+=1
-                            good = False
-                            idxR2+=1
-                            if idxR2 < len(arr):
-                                good = arr[idxR2] == arr[idxR]
-                        continueRight = cL.add(arr[idxR],quantity)
-                        idxR = idxR2
-                        continueRight = idxR < len(arr)
+                idx_X_next = idxR+1
+                while idx_X_next < len(arr):
+                    if r==arr[idx_X_next]:
+                        quantity+=1
+                        idx_X_next+=1
+                        if idx_X_next < len(arr):
+                            break
+                    else:
+                        break
+                qRemaining = cL.addToEnd(r,quantity)
+                if qRemaining > 0:
+                    break
+                else:
+                    if idx_X_next < len(arr):
+                        idxR = idx_X_next
+                        r = arr[idxR]
+                    else:
+                        r = None
         o = cL.list
         o.sort()
         return o
@@ -201,5 +167,18 @@ if __name__=="__main__":
     print("CASE 6:")
     dumbArray = data['testCase6']['arr']
     o = sol.findClosestElements(dumbArray,6399,-28)
-    print(o)
+    # print(o)
     assert 6399 == len(o)
+
+    print("CASE 7:")
+    o = sol.findClosestElements([-2,-1,1,2,3,4,5],7,3)
+    assert 7 == len(o)
+    assert -2 == o[0]
+    assert -1 == o[1]
+    assert 1  == o[2]
+    assert 2  == o[3]
+    assert 3  == o[4]
+    assert 4  == o[5]
+    assert 5  == o[6]
+
+    print("done.")
