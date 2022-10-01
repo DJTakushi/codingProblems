@@ -14,7 +14,7 @@ SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}")
 
 add_subdirectory(legoFunctions)
 # add_subdirectory(interface)
-# add_subdirectory(test)
+add_subdirectory(tests)
 list(APPEND EXTRA_LIBS legoFunctions)
 
 # create .h file from configurable .h.in file into output location
