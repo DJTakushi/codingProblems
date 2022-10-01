@@ -73,3 +73,50 @@ For the second case, each row of the wall can contain either two blocks of width
 
 # Notes
 - Restructuring per Boris Kolpackov's Canonical Project Structure ([https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1204r0.html](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1204r0.html))
+
+# Configure, build, and install with CMake
+### Configure
+Navigate to this directory
+1. Create `out` subdirectory
+```
+mkdir out
+```
+Navigate to this with `cd out`
+2. Create CMAke project with parent's `CMakeLists.txt`:
+```
+cmake ..
+```
+
+### Build
+(in `out` directory)
+```
+make
+```
+
+Run interface locally:
+```
+./lb 2 "2 2"
+```
+### Install
+(in `out` directory)
+Install with:
+```
+cmake --install .
+```
+Observe the installation details
+```
+root@629cd871f0e1:/cp/hrw1d6_2_legoBlocks/out# cmake --install .
+-- Install configuration: ""
+-- Installing: /usr/local/lb/lb
+-- Set runtime path of "/usr/local/lb/lb" to "/usr/local/lb"
+-- Installing: /usr/local/lb/include/legoBlocksInterfaceConfig.h
+-- Installing: /usr/local/lb/legoFunctions/liblegoFunctionsStatic.a
+-- Installing: /usr/local/lb/liblegoFunctions.so
+-- Set runtime path of "/usr/local/lb/liblegoFunctions.so" to "/usr/local/lb"
+-- Installing: /usr/local/lb/legoFunctions/legoFunctions.h
+```
+
+Can run `lb` from `usr/local/lb`:
+```
+/usr/local/lb/lb 2 "2 2"
+```
