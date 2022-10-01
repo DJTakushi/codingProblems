@@ -1,4 +1,4 @@
-#include "v.h"
+#include "legoFunctions.h"
 #include <iostream>
 vector<vector<int>> getVector(int l, int max, vector<int> vIn){
 		/** l = length of row

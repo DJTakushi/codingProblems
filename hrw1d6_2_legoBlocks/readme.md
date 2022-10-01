@@ -70,3 +70,6 @@ image
 
 
 For the second case, each row of the wall can contain either two blocks of width 1, or one block of width 2. However, the wall where all rows contain two blocks of width 1 is not a solid one as it can be divided vertically. Thus, the number of ways is  and .
+
+# Notes
+- Restructuring per Boris Kolpackov's Canonical Project Structure ([https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1204r0.html](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1204r0.html))

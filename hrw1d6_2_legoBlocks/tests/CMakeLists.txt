@@ -8,10 +8,11 @@ project(legoBlocksTest
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-list(APPEND EXTRA_LIBS legoFunctions)
-target_link_libraries(${PROJECT_NAME} PUBLIC ${EXTRA_LIBS})
-target_include_directories(${PROJECT_NAME} PUBLIC
-                            "${PROJECT_BINARY_DIR}"
-                          )
+# list(APPEND EXTRA_LIBS legoFunctions)
+# target_link_libraries(${PROJECT_NAME} PUBLIC ${EXTRA_LIBS})
+
+# target_include_directories(${PROJECT_NAME} PUBLIC
+#                             "${PROJECT_BINARY_DIR}"
+#                           )
 
 add_executable(${PROJECT_NAME} test.cpp)

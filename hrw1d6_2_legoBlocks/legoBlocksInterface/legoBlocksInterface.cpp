@@ -1,7 +1,8 @@
 #include <iostream>
 #include <string>
-#include "include/config.h"
-#include <v.h>
+#include <legoBlocksInterfaceConfig.h>
+#include <legoFunctions/legoFunctions.h>
+
 using namespace std;
 void printProjectInfo(){
 	string pName = PROJECT_NAME;
