@@ -1,5 +1,8 @@
 #include "legoFunctions.h"
 #include <iostream>
+#include <chrono>
+#include <list>
+#include <math.h>
 vector<vector<int>> getVector(int l, int max){
 		/** l = length of row
 				max = max block length **/
@@ -51,20 +54,25 @@ set<int> setAnd(set<int> a,set<int>b){
 	}
 	return out;
 }
-int buildWalls(int n, set<set<int>>* options, set<int> crackIdxs)
-{/** n - remaining height
-	options = pointer to options for row (uro)
-	crackIdxs indeces where there is a crack.  may be empty!**/
+int countBadWalls(int n, list<set<int>>* options, set<int> crackIdxs)
+{
+	//recursive count the number of bad iterations
 	int output = 0;
 	if(n==0){
-		if(crackIdxs.size()==0)output = 1;//no cracks exist - good
-		else output = 0;//cracks exist - bad
+		if(crackIdxs.size()>0)output = 1;//cracks exist - count this as bad
+		else output = 0;//cracks do not exist - bad
 	}
 	else
 	{
-		for(auto it= options->begin(); it != options->end(); it++){//can actually just look at options as a vector of set<ints>
-			set<int>crackIdxs_t = setAnd(crackIdxs, *it);//continue any shared cracks, forgive any that are mended
-			output+=buildWalls(n-1,options,crackIdxs_t);//increment by recursive call
+		if(crackIdxs.size()>0)
+		{
+			for(auto it= options->begin(); it != options->end(); it++)
+			{
+				set<int>crackIdxs_t;
+				// crackIdxs_t = crackIdxs;
+				crackIdxs_t = setAnd(crackIdxs, *it);//continue any shared cracks, forgive any that are mended
+				output+=countBadWalls(n-1,options,crackIdxs_t);//increment by recursive call
+			}
 		}
 	}
 	return output;
@@ -73,21 +81,48 @@ int legoBlocks(int n, int m){
 	/** n = height of wall
 	m = width of wall
 	returns number of possible combinations **/
+	auto start = chrono::steady_clock::now();
+	auto startT = start;
 	int out = 0;
+
 	vector<vector<int>> uro = getVector(m,4);  //unrestricted row options
-	set<set<int>> uroSet;
+	auto getVectorTimeDiff = chrono::steady_clock::now()-startT;
+
+	startT = chrono::steady_clock::now();
+	list<set<int>> uroList;
 	for(auto it = uro.begin();it!=uro.end();it++){
 		set<int> s = getCrackIdx(*it);
-		uroSet.insert(s);
+		uroList.push_back(s);
 	}
-	// cout << "uro:"<<endl;
+	auto get_uroSetTime = chrono::steady_clock::now()-startT;
+
+	cout << "uroList.size="<<uroList.size()<<endl;
 	//printVectorVector(uro);
+	startT = chrono::steady_clock::now();
 	set<int>crackIdxsBlank;
 	for(int i = 0; i < m; i++)
 		crackIdxsBlank.insert(i);
 	if(n >0){
-			out = buildWalls(n,&uroSet,crackIdxsBlank);
+			out = pow(uroList.size(), n)- countBadWalls(n,&uroList,crackIdxsBlank);
 	}
+	auto buildWallsTime = chrono::steady_clock::now()-startT;
+	auto totalDiff = chrono::steady_clock::now()-start;
+
+	long td_0 = getVectorTimeDiff.count();
+	long td_1 = get_uroSetTime.count();
+	long td_2 = buildWallsTime.count();
+	long td_t = totalDiff.count();
+	float tdp_0 = 100*float(td_0)/td_t;
+	float tdp_1 = 100*float(td_1)/td_t;
+	float tdp_2 = 100*float(td_2)/td_t;
+	// cout <<td_t<<endl;
+	// cout << tdp_0 <<endl;
+	// cout << tdp_1 <<endl;
+	// cout << tdp_2 <<endl;
+
+	cout <<"    completed getVector("<<m<<","<<4<<") in time diff "<<td_0<<"("<<tdp_0<<"%)"<<endl;
+	cout <<"    completed getting uroSet in time diff "<<td_1<<"("<<tdp_1<<"%)"<<endl;
+	cout <<"    completed buildWalls in time diff "<<td_2<<"("<<tdp_2<<"%)"<<endl;
 	return out;
 }
 #ifdef PRINT_FUNCTIONS
