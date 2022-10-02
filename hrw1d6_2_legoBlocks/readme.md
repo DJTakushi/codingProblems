@@ -109,14 +109,24 @@ root@629cd871f0e1:/cp/hrw1d6_2_legoBlocks/out# cmake --install .
 -- Install configuration: ""
 -- Installing: /usr/local/lb/lb
 -- Set runtime path of "/usr/local/lb/lb" to "/usr/local/lb"
--- Installing: /usr/local/lb/include/legoBlocksInterfaceConfig.h
--- Installing: /usr/local/lb/legoFunctions/liblegoFunctionsStatic.a
--- Installing: /usr/local/lb/liblegoFunctions.so
--- Set runtime path of "/usr/local/lb/liblegoFunctions.so" to "/usr/local/lb"
--- Installing: /usr/local/lb/legoFunctions/legoFunctions.h
+-- Up-to-date: /usr/local/lb/include/legoBlocksInterfaceConfig.h
+-- Up-to-date: /usr/local/lb/legoFunctions/liblegoFunctionsStatic.a
+-- Up-to-date: /usr/local/lb/liblegoFunctions.so
+-- Up-to-date: /usr/local/lb/legoFunctions/legoFunctions.h
+-- Installing: /usr/local/lb/lbTest
+-- Set runtime path of "/usr/local/lb/lbTest" to "/usr/local/lb"
 ```
 
 Can run `lb` from `usr/local/lb`:
 ```
 /usr/local/lb/lb 2 "2 2"
 ```
+# Testing
+### Function Testing
+Function test tools are built in the main CMake build from content in the `tests` directory.  They are generated as `out/tests/lbTest`, and are installed as `/usr/local/lb/lbTest` to test the installation.
+
+##### Library Test
+The legoFunctions library `liblegoFunctions.so` is tested by default by running `lbTest`
+
+##### Interface Test
+The interface is tested with `lbTest i`
