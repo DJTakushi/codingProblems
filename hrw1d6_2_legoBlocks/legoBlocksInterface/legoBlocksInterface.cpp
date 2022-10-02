@@ -40,13 +40,13 @@ int main(int argc, char* argv[])
         string b =s.substr(spaceIdx+1, string::npos);
         // cout <<" b="<<b<<endl;
         m = stoi(b);
-        cout << "n="<<n<<", m="<<m << endl;
+        // cout << "n="<<n<<", m="<<m << endl;
         // vector<int> vIn;
         // vector<vector<int>> v = getVector(m,4,vIn);
         // printVector(v);
 				// cout << "solve("<<n<<","<<m<<"):"<<endl;
 				int out = legoBlocks(n,m);
-				cout <<"answer = "<<out<<endl;
+				cout <<out<<endl;
       }
       // getVector(0,vIn);
       break;
