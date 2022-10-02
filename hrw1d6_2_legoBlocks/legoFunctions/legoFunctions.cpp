@@ -1,10 +1,8 @@
 #include "legoFunctions.h"
 #include <iostream>
-vector<vector<int>> getVector(int l, int max, vector<int> vIn){
+vector<vector<int>> getVector(int l, int max){
 		/** l = length of row
-				max = max block length
-				vIn = previous row **/
-		string vInS;
+				max = max block length **/
 		vector<vector<int>> out;
 		if(l>=0)
 		{
@@ -21,7 +19,7 @@ vector<vector<int>> getVector(int l, int max, vector<int> vIn){
 							int newl = l-i;
 							if(newl>=0)
 							{
-								vector<vector<int>> recursive = getVector(newl,max,vIn);
+								vector<vector<int>> recursive = getVector(newl,max);
 								for(auto it = recursive.begin();it!=recursive.end();it++)
 								{
 									it->insert(it->begin(),i);
@@ -34,6 +32,7 @@ vector<vector<int>> getVector(int l, int max, vector<int> vIn){
     return out;
 }
 set<int> getCrackIdx(vector<int> i){
+	/** return set of indexes in a row where cracks occur for the block arrangement**/
 	set<int> out;
 	int sum = 0;
 	for(auto it=i.begin();it!=i.end()-1;it++)
@@ -44,6 +43,7 @@ set<int> getCrackIdx(vector<int> i){
 	return out;
 }
 set<int> setAnd(set<int> a,set<int>b){
+	/*** returns the AND of two sets ***/
 	set<int> out;
 	for(auto it = a.begin(); it!=a.end(); it++)
 	{
@@ -51,7 +51,7 @@ set<int> setAnd(set<int> a,set<int>b){
 	}
 	return out;
 }
-int buildWalls(int n, vector<vector<int>>* options, set<int> crackIdxs)
+int buildWalls(int n, set<set<int>>* options, set<int> crackIdxs)
 {/** n - remaining height
 	options = pointer to options for row (uro)
 	crackIdxs indeces where there is a crack.  may be empty!**/
@@ -63,7 +63,7 @@ int buildWalls(int n, vector<vector<int>>* options, set<int> crackIdxs)
 	else
 	{
 		for(auto it= options->begin(); it != options->end(); it++){//can actually just look at options as a vector of set<ints>
-			set<int>crackIdxs_t = setAnd(crackIdxs, getCrackIdx(*it));//continue any shared cracks, forgive any that are mended
+			set<int>crackIdxs_t = setAnd(crackIdxs, *it);//continue any shared cracks, forgive any that are mended
 			output+=buildWalls(n-1,options,crackIdxs_t);//increment by recursive call
 		}
 	}
@@ -74,15 +74,19 @@ int legoBlocks(int n, int m){
 	m = width of wall
 	returns number of possible combinations **/
 	int out = 0;
-	vector<int> dummy;
-	vector<vector<int>> uro = getVector(m,4, dummy);  //unrestricted row options
+	vector<vector<int>> uro = getVector(m,4);  //unrestricted row options
+	set<set<int>> uroSet;
+	for(auto it = uro.begin();it!=uro.end();it++){
+		set<int> s = getCrackIdx(*it);
+		uroSet.insert(s);
+	}
 	// cout << "uro:"<<endl;
 	//printVectorVector(uro);
 	set<int>crackIdxsBlank;
 	for(int i = 0; i < m; i++)
 		crackIdxsBlank.insert(i);
 	if(n >0){
-			out = buildWalls(n,&uro,crackIdxsBlank);
+			out = buildWalls(n,&uroSet,crackIdxsBlank);
 	}
 	return out;
 }
