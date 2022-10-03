@@ -1,0 +1,26 @@
+#include <vector>
+#include <iostream>
+#include <string>
+#define VERSION_MAJOR @addTwo_VERSION_MAJOR@
+#define VERSION_MINOR @addTwo_VERSION_MINOR@
+#define PROJECT_NAME "@PROJECT_NAME@"
+#define PROJECT_DESCRIPTION "@PROJECT_DESCRIPTION@"
+#define PROJECT_HOMEPAGE_URL "@PROJECT_HOMEPAGE_URL@"
+
+
+using namespace std;
+ // Definition for singly-linked list.
+struct ListNode {
+   int val;
+   ListNode *next;
+   ListNode() : val(0), next(nullptr) {}
+   ListNode(int x) : val(x), next(nullptr) {}
+   ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+class Solution {
+public:
+    vector<string> getDescription();
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2);
+};
+ListNode* createNodeList(string i);
+string getNodeListString(ListNode* head);
