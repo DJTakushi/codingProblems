@@ -22,6 +22,10 @@ int test(void)
   ot=sol.longestPalindrome(it);
   assert("ranynar"==ot);
 
+  it = "cbbd"; // leetcode case 73/140
+  ot=sol.longestPalindrome(it);
+  assert("bb"==ot);
+
   cout <<"tests complete."<<endl;
   return o;
 }
