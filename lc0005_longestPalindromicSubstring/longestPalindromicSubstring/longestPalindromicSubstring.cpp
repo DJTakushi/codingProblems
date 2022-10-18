@@ -35,9 +35,10 @@ string Solution::longestPalindrome(string s) {
         }
     }
 #else
+#ifdef FIRM_FORCE
     map<char, vector<int>> charIdxM;//char-index map (vector represents indexes where character occurs)
 
-    for(int i = 0; i < s_l; i++){
+    for(int i = 0; i < s_l; i++){//populate charIdxM
         char ct = s[i];//char_temp
         map<char, vector<int>>::iterator it = charIdxM.find(ct);
         if(it!=charIdxM.end()) it->second.push_back(i); // add to back of vector
@@ -45,7 +46,7 @@ string Solution::longestPalindrome(string s) {
     }
     for(auto it = charIdxM.begin(); it!=charIdxM.end();it++){//iterate through map's keys (characters)
         vector<int> idxV = it->second;
-        // int startIdx =
+
         bool maxAchieved=false;//max possible palindome found for this char
         for(auto start = idxV.begin(); start <idxV.end();start++){
             for(auto endI = idxV.rbegin(); endI<idxV.rend();endI++){
@@ -63,6 +64,38 @@ string Solution::longestPalindrome(string s) {
             if(maxAchieved)break;
         }
     }
+#else
+//iterate along characters in string
+  for(size_t i = 0; i < s.size(); i++){
+    string ot; //o temp
+
+    // set left and right indexes to this char
+    size_t left = i;
+    size_t right = i;
+
+    // while left==right (it's a palindrome)
+    while(true){
+      //  if can increase left and right indexes, do it
+
+      size_t leftNew = left-1;
+      size_t rightNew = right+1;
+      if((left>0 & right < s_l-1)
+            && (s[leftNew]==s[rightNew])){
+        left--;
+        right++;
+      }
+      //  if not, break
+      else break;
+    }
+    ot=s.substr(left,right-left+1);
+    cout << "i:"<<to_string(i)<<", ot="<<ot<<endl;
+    // record substring if a record
+    o = ot.size() > o.size() ? ot : o;
+  }
+
+// improvemnt! start in middle of s, and then iterate right/left.  Stop iterating if potential palindrome length is lower than record length
+
+#endif
 #endif
     return o;
 }
