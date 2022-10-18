@@ -74,7 +74,7 @@ string Solution::longestPalindrome(string s) {
     size_t right = i;
 
     // while left==right (it's a palindrome)
-    while(true){
+    while(s[left]==s[right]){//not necessary to check here if left==right
       //  if can increase left and right indexes, do it
 
       size_t leftNew = left-1;
@@ -91,6 +91,37 @@ string Solution::longestPalindrome(string s) {
     cout << "i:"<<to_string(i)<<", ot="<<ot<<endl;
     // record substring if a record
     o = ot.size() > o.size() ? ot : o;
+
+    //TODO: rfactor this to make DRY code.
+    // Consider function prototype:
+    // string getPalindromeAtRoot(string s, int leftStart, int rightStart);
+    if(i<s.size()-1){
+      // set left and right indexes to this char
+      left = i;
+      right = i+1;
+
+      // while left==right (it's a palindrome)
+      while(s[left]==s[right]){
+        //  if can increase left and right indexes, do it
+
+        size_t leftNew = left-1;
+        size_t rightNew = right+1;
+        if((left>0 & right < s_l-1)
+              && (s[leftNew]==s[rightNew])){
+          left--;
+          right++;
+        }
+        //  if not, break
+        else break;
+      }
+      if(s[left]==s[right]){//must check in case they were never equal
+        ot=s.substr(left,right-left+1);
+        cout << "i(2):"<<to_string(i)<<", ot="<<ot<<endl;
+        // record substring if a record
+        o = ot.size() > o.size() ? ot : o;
+      }
+    }
+
   }
 
 // improvemnt! start in middle of s, and then iterate right/left.  Stop iterating if potential palindrome length is lower than record length
