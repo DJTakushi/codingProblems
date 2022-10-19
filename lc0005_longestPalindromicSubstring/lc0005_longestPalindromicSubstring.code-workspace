@@ -4,5 +4,12 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"ios": "cpp",
+			"xiosbase": "cpp",
+			"*.in": "cpp",
+			"string": "cpp"
+		}
+	}
 }
