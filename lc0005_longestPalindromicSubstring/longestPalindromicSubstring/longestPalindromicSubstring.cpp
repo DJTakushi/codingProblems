@@ -1,23 +1,6 @@
 #include <longestPalindromicSubstring.h>
 #include <map>
-bool Solution::isPalindrome(string s){
-    cout << "isPalindrome("<<s<<")...";
-    bool o = true;
-    int s_l = s.size();//string length
-    int midpoint = s_l/2;
-    for(int i = 0; i < midpoint; i++)
-    {
-        char l = s[i];
-        char r = s[s_l-1-i];
-        if(l!=r){
-            // cout <<s[i]<<"!="<<s[s_l-1-i]<<endl;
-            o = false;
-            break;
-        }
-    }
-    cout <<o<<endl;
-    return o;
-}
+
 string Solution::longestPalindrome(string s) {
     string o = s.substr(0,1);
     int o_l = o.size();//o length

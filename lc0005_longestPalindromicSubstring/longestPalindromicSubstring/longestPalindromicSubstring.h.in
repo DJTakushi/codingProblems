@@ -13,6 +13,5 @@ using namespace std;
 class Solution {
 public:
     vector<string> getDescription();
-    bool isPalindrome(string s);
     string longestPalindrome(string s);
 };
