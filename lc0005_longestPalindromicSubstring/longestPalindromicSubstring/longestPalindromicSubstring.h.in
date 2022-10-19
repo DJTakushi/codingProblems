@@ -13,5 +13,9 @@ using namespace std;
 class Solution {
 public:
     vector<string> getDescription();
+
+    /// gets biggest palindrome starting at index `i` 
+    /// of string `s` with starting indexes `left` and `right`
+    string getPalindromeAtRoot(string s, int i, size_t left, size_t right);
     string longestPalindrome(string s);
 };
