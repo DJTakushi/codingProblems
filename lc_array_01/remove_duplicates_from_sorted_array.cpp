@@ -1,17 +1,16 @@
 #include "remove_duplicates_from_sorted_array.h"
 
 int Solution::removeDuplicates(std::vector<int>& nums) {
-  int k = 0;
-  int last = -101;//out of cases's range
-  for(size_t idx = 0; idx < nums.size(); idx++){
-    if(last == nums[idx]){
-      nums.erase(nums.begin()+idx);
-      idx--;//go back
+  std::vector<int>::iterator it = nums.begin();
+  while(it < nums.end()){
+    std::vector<int>::iterator jt = it;
+    while(jt < nums.end() && *jt == *it){
+      jt++;
     }
-    else{
-      k++;
+    if(*it == *(jt-1)){
+      nums.erase((it+1), jt);
     }
-    last = nums[idx];
+    it++;
   }
-  return k;
+  return nums.size();
 }
