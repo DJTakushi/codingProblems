@@ -1,7 +1,5 @@
-#include <stock_trader.h>
+#include "stock_trader.h"
 
-class Solution {
-public:
-int maxProfit(std::vector<int>& prices){
-}
+int Solution::maxProfit(std::vector<int>& prices){
+  return 0;
 };
