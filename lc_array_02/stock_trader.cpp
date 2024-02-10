@@ -2,11 +2,15 @@
 
 int Solution::maxProfit(std::vector<int>& prices){
   int profit = 0;
-  std::vector<int>::iterator it = prices.begin();
-  while(it != (prices.end()-1)){
-    if(*it < *(it+1)){
-      profit += *(it+1)-*it;
+  int last = prices[0];
+  std::vector<int>::iterator it = prices.begin()+1;
+  int val;
+  while(it != prices.end()){
+    val = *it;
+    if(val > last){
+      profit += val-last;
     }
+    last = val;
     it++;
   }
   return profit;
