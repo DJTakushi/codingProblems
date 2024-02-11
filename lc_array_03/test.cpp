@@ -12,7 +12,7 @@ int main(int argc, char* argv[]){
 
 class demoTest : public ::testing::Test, public Solution{};
 TEST_F(demoTest,example_1){
-  std::vector<int> vec = {7,1,2,3,4,5,6};
+  std::vector<int> vec = {1,2,3,4,5,6,7};
   rotate(vec,3);
   EXPECT_THAT(vec,testing::ElementsAre(5,6,7,1,2,3,4));
 }
@@ -25,7 +25,7 @@ TEST_F(demoTest,example_2){
 static void case1(benchmark::State& state) {
   Solution s;
   for (auto _ : state){
-    std::vector<int> vec = {7,1,2,3,4,5,6};
+    std::vector<int> vec = {1,2,3,4,5,6,7};
     s.rotate(vec,3);
   }
 }
