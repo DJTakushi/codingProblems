@@ -48,6 +48,30 @@
         "panel": "shared"
       },
       "problemMatcher": "$gcc"
+    },
+    {
+      "label": "lc00008 build",
+      "type": "shell",
+      "command": "g++",
+      "args": [
+        "-Wall",
+        "-g",
+        // "-O2",
+        "-pthread",
+        "${workspaceFolder}/lc00008_string_to_int/my_atoi.cpp",
+        "${workspaceFolder}/lc00008_string_to_int/test.cpp",
+        "/usr/local/lib/libgtest.a",
+        "-o",
+        "${workspaceFolder}/lc00008_string_to_int/tests"
+      ],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": "$gcc"
     }
   ]
 }

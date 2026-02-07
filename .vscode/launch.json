@@ -43,12 +43,32 @@
         }
       ]
     },
-        {
+    {
       "name": "lc00007_reverse_integer debug",
       "type": "cppdbg",
       "request": "launch",
       "preLaunchTask": "lc00007 build", // This runs the task defined in tasks.json
       "program": "${workspaceFolder}/lc00007_reverse_integer/tests",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    },
+    {
+      "name": "lc00008_string_to_int debug",
+      "type": "cppdbg",
+      "request": "launch",
+      "preLaunchTask": "lc00008 build", // This runs the task defined in tasks.json
+      "program": "${workspaceFolder}/lc00008_string_to_int/tests",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
