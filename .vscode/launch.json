@@ -22,6 +22,26 @@
           "ignoreFailures": true
         }
       ]
+    },
+    {
+      "name": "lc00004_median_of_two_sorted_arrays debug",
+      "type": "cppdbg",
+      "request": "launch",
+      "preLaunchTask": "lc00004 build", // This runs the task defined in tasks.json
+      "program": "${workspaceFolder}/lc00004_median_of_two_sorted_arrays/tests",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
     }
   ]
 }

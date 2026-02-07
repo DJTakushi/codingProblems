@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "lc00004 build",
+      "type": "shell",
+      "command": "g++",
+      "args": [
+        "-Wall",
+        "-g",
+        "-O2",
+        "-pthread",
+        "${workspaceFolder}/lc00004_median_of_two_sorted_arrays/medianOfTwoSortedArrays.cpp",
+        "${workspaceFolder}/lc00004_median_of_two_sorted_arrays/test.cpp",
+        "/usr/local/lib/libgtest.a",
+        "-o",
+        "${workspaceFolder}/lc00004_median_of_two_sorted_arrays/tests"
+      ],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": "$gcc"
+    }
+  ]
+}   
