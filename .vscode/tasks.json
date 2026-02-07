@@ -24,6 +24,30 @@
         "panel": "shared"
       },
       "problemMatcher": "$gcc"
+    },
+    {
+      "label": "lc00007 build",
+      "type": "shell",
+      "command": "g++",
+      "args": [
+        "-Wall",
+        "-g",
+        // "-O2",
+        "-pthread",
+        "${workspaceFolder}/lc00007_reverse_integer/reverse_integer.cpp",
+        "${workspaceFolder}/lc00007_reverse_integer/test.cpp",
+        "/usr/local/lib/libgtest.a",
+        "-o",
+        "${workspaceFolder}/lc00007_reverse_integer/tests"
+      ],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": "$gcc"
     }
   ]
-}   
+}
