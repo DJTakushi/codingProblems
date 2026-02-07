@@ -36,6 +36,15 @@ TEST_F(minTest, example2)
   EXPECT_EQ(2.5, result);
 }
 
+TEST_F(minTest, example_3)
+{
+  vector<int> n1 = {0,0};
+  vector<int> n2 = {0,0};
+
+  double result = s->findMedianSortedArrays(n1, n2);
+  EXPECT_EQ(0.0, result);
+}
+
 int main(int argc, char **argv)
 {
   ::testing::InitGoogleTest(&argc, argv);
