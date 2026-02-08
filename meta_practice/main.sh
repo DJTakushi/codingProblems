@@ -1,0 +1,3 @@
+echo "> mkdir -p build && cp /catch2-utils/tests_runner.o build && make -s && ./build/tests_runner --use-colour=yes"
+  mkdir -p build && cp /catch2-utils/tests_runner.o build && make -s && ./build/tests_runner --use-colour=yes
+  
